@@ -16,8 +16,3 @@ struct SwiftUI_VP_ProjectApp: App {
         }
     }
 }
-
-struct Detail<T: View> {
-    var a: () -> T
-    var b: () -> T
-}

@@ -19,10 +19,9 @@ public struct CommonButtonStyle: ButtonStyle {
             .frame(height: 60)
             .font(.system(size: 20))
             .fontWeight(.bold)
-            .background(GetCKitAsset.mainColor.swiftUIColor)
+            .background(GetCKitAsset.color1.swiftUIColor)
             .foregroundColor(.black)
             .cornerRadius(10)
             .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
-            .padding(.horizontal, 20)
     }
 }

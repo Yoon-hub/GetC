@@ -10,6 +10,9 @@ import Foundation
 import SwiftUI
 
 public struct DisableButtonStyle: ButtonStyle {
+    
+    public init() {}
+    
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
@@ -23,6 +26,5 @@ public struct DisableButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.gray, lineWidth: 1)
             )
-            .padding(.horizontal, 20)
     }
 }

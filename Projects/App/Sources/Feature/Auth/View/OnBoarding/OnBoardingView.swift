@@ -15,18 +15,20 @@ struct OnBoardingView: View {
         NavigationView {
             VStack {
                 NavigationLink  {
-                    //InviteCodeView()
+                    InViteCodeView()
                 } label: {
                     Text("초대받고 왔어요!")
                 }
                 .buttonStyle(CommonButtonStyle())
+                .padding(.horizontal, 20)
 
                 HStack {
                     Text("이미 계정이 있어요.")
                     Button {
                     } label: {
                         Text("로그인")
-                        
+                            .foregroundColor(GetCKitAsset.color2.swiftUIColor)
+                            .fontWeight(.bold)
                     }
                 }
             }
@@ -39,3 +41,4 @@ struct OnBoardingView_Previews: PreviewProvider {
         OnBoardingView()
     }
 }
+

@@ -8,7 +8,9 @@
 import Foundation
 import ProjectDescription
 
-let infoPlist: [String: Plist.Value] = [:]
+let infoPlist: [String: Plist.Value] = [
+    "UILaunchStoryboardName":"LaunchScreen"
+]
 
 let appTargets: [Target] = [
   .init(name: "GetC",

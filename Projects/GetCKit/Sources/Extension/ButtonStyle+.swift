@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-extension ButtonStyle {
+public extension ButtonStyle {
     
     var any: AnyButtonStyle {
         AnyButtonStyle(self)
@@ -17,7 +17,7 @@ extension ButtonStyle {
 
 }
 
-struct AnyButtonStyle: ButtonStyle {
+public struct AnyButtonStyle: ButtonStyle {
     
     private let makeBodyConfig: (ButtonStyle.Configuration) -> AnyView // AnyView View를 wrapping 해서 리턴 타입을 맞춰주는 타입
     
@@ -27,7 +27,7 @@ struct AnyButtonStyle: ButtonStyle {
         }
     }
     
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         makeBodyConfig(configuration)
     }
     
