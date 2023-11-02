@@ -23,7 +23,9 @@ let appTargets: [Target] = [
         resources: ["Resources/**"],
         dependencies: [
           .project(target: "GetCKit", path: "../GetCKit"),
-          .project(target: "NetworkKit", path: "../NetworkKit")
+          .project(target: "NetworkKit", path: "../NetworkKit"),
+          .external(name: "TCACoordinators"),
+          .external(name: "ComposableArchitecture")
         ])
 ]
 

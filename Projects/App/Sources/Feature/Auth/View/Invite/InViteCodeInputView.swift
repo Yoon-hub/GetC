@@ -9,11 +9,19 @@
 import SwiftUI
 import GetCKit
 
+import ComposableArchitecture
+
 public struct InViteCodeView: View {
         
-    @State public var codeText: String = ""
+    //@State public var codeText: String = ""
+    
+    public let store: StoreOf<InViteCodeFeature>
     
     public var body: some View {
+        
+        WithViewStore(store, observe: {$0}) { viewStore in
+            
+        }
         VStack(alignment: .leading) {
             Spacer()
                 .frame(height: 112)
@@ -24,7 +32,7 @@ public struct InViteCodeView: View {
                 .frame(height: 16)
             
             VStack(alignment: .leading){
-                AuthTextField(text: $codeText)
+             //   AuthTextField(text: $codeText)
                 Text("입력하신 초대코드가 존재하지 않습니다.")
                     .font(.system(size: 11))
                     .foregroundColor(.red)
@@ -35,7 +43,7 @@ public struct InViteCodeView: View {
                 } label: {
                     Text("초대코드 인증하기")
                 }
-                .buttonStyle(codeText.count == 6 ? CommonButtonStyle().any : DisableButtonStyle().any)
+              //  .buttonStyle(codeText.count == 6 ? CommonButtonStyle().any : DisableButtonStyle().any)
             }
             .padding(.horizontal, 12)
             Spacer()
@@ -47,9 +55,9 @@ public struct InViteCodeView: View {
     }
 }
 
-struct InViteCodeView_Previews: PreviewProvider {
-    static var previews: some View {
-        InViteCodeView()
-    }
-}
+//struct InViteCodeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        InViteCodeView()
+//    }
+//}
 

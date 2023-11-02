@@ -9,13 +9,18 @@
 import SwiftUI
 import GetCKit
 
+import ComposableArchitecture
+
 struct OnBoardingView: View {
+    
+    public let store: StoreOf<OnBoardingFeature>
+    
     var body: some View {
         
         NavigationView {
             VStack {
-                NavigationLink  {
-                    InViteCodeView()
+                Button {
+                    print("버튼")
                 } label: {
                     Text("초대받고 왔어요!")
                 }
@@ -36,9 +41,9 @@ struct OnBoardingView: View {
     }
 }
 
-struct OnBoardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        OnBoardingView()
-    }
-}
+//struct OnBoardingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OnBoardingView()
+//    }
+//}
 

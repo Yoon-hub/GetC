@@ -8,11 +8,17 @@
 
 import SwiftUI
 
+import ComposableArchitecture
+
 @main
 struct SwiftUI_VP_ProjectApp: App {
     var body: some Scene {
         WindowGroup {
-            OnBoardingView()
+            AppCoordinatorView(store:
+                Store(initialState: .initialState, reducer: {
+                    AppCoordinator()
+            })
+            )
         }
     }
 }
