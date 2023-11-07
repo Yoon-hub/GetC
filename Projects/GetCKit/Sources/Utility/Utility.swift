@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+public final class Utility {
+    
+    public static func print<T>(_ log: T) {
+        #if DEBUG
+        Swift.print("🔧 \(log)")
+        #endif
+    }
+}
+

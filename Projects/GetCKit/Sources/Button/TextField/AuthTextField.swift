@@ -11,13 +11,15 @@ import SwiftUI
 public struct AuthTextField: View {
     
     @Binding public var text: String
+    public var placeholder: String
     
-    public init(text: Binding<String>) {
+    public init(text: Binding<String>, placeholder: String = "") {
         self._text = text
+        self.placeholder = placeholder
     }
     
     public var body: some View {
-        TextField("초대코드", text: $text)
+        TextField(placeholder, text: $text)
             .font(.system(size: 22))
             .frame(height: 62)
             .padding(.horizontal, 12)

@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+public struct GetCGridRules {
+    /// GetC에 적용하는 일반적인 좌우 간격을 의미합니다
+    public static let globalHorizontalPadding: CGFloat = 24.0
+}
