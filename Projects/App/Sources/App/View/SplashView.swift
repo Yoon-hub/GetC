@@ -13,18 +13,27 @@ public struct SplashView: View {
     
     public let store: StoreOf<SplashFeature>
     
+    @State var opacity: Double = 1.0
+    
+    init(store: StoreOf<SplashFeature>) {
+        self.store = store
+    }
+    
     public var body: some View {
         WithViewStore(store, observe: {$0}) { viewStore in
             Image("GetC")
                 .resizable()
                 .frame(width: 100, height: 100)
+                .opacity(opacity)
+                
+                .onAppear {
+                    withAnimation(.easeInOut(duration: 1)) {
+                        opacity = 0.0
+                    }
+                    store.send(._onApper)
+                }
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                store.send(._onApper)
-            }
-        
-        }
+
     }
     
 }

@@ -8,11 +8,11 @@
 
 import ComposableArchitecture
 import SwiftUI
+import GetCKit
 
 public struct SplashFeature: Reducer {
     
     public struct State: Equatable {
-        
     }
     
     public enum Action {
@@ -30,7 +30,7 @@ public struct SplashFeature: Reducer {
                 await send(._moveToAuth)
             }
         case ._moveToAuth:
-            print("moveToAuth")
+            Utility.print("moveToAuth")
             return .none
         }
     }
