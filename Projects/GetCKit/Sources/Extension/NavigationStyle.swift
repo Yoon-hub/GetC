@@ -10,12 +10,13 @@ import SwiftUI
 
 public extension View {
     
-    func navigationBackButtonSet() -> some View {
+    func navigationBackButtonSet(backButtonTap : @escaping (() -> Void)) -> some View {
         self
             .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
+                        backButtonTap()
                     } label: {
                         Image(systemName: "chevron.backward")
                             .foregroundColor(.black)
