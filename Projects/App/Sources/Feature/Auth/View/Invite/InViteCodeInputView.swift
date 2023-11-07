@@ -12,16 +12,17 @@ import GetCKit
 import ComposableArchitecture
 
 public struct InViteCodeView: View {
-        
-    //@State public var codeText: String = ""
     
     public let store: StoreOf<InViteCodeFeature>
+    @ObservedObject var viewStore: ViewStoreOf<InViteCodeFeature>
+    
+    init(store: StoreOf<InViteCodeFeature>) {
+        self.store = store
+        self.viewStore = ViewStore(self.store, observe: {$0})
+    }
     
     public var body: some View {
-        
-        WithViewStore(store, observe: {$0}) { viewStore in
-            
-        }
+
         VStack(alignment: .leading) {
             Spacer()
                 .frame(height: 112)
@@ -32,32 +33,38 @@ public struct InViteCodeView: View {
                 .frame(height: 16)
             
             VStack(alignment: .leading){
-             //   AuthTextField(text: $codeText)
+                AuthTextField(text: viewStore.binding(get: \.codeText, send: InViteCodeFeature.Action.textEditing), placeholder: "초대코드")
+                
                 Text("입력하신 초대코드가 존재하지 않습니다.")
                     .font(.system(size: 11))
                     .foregroundColor(.red)
                     .fontWeight(.semibold)
+                    .opacity(viewStore.validCode ? 0 : 1)
+                    
                 Spacer()
                 Button {
-                    print("멀봐")
+                    viewStore.send(.authButtonTap)
                 } label: {
                     Text("초대코드 인증하기")
                 }
-              //  .buttonStyle(codeText.count == 6 ? CommonButtonStyle().any : DisableButtonStyle().any)
+                .buttonStyle(viewStore.codeText.count == 6 ? CommonButtonStyle().any : DisableButtonStyle().any)
             }
-            .padding(.horizontal, 12)
             Spacer()
                 .frame(height: 16)
             
         }
-        .padding(.horizontal, 16)
-        .navigationBackButtonSet()
+        .padding(.horizontal, GetCGridRules.globalHorizontalPadding)
+        .navigationBackButtonSet {
+            viewStore.send(.navigationButtonTap)
+        }
     }
 }
 
-//struct InViteCodeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        InViteCodeView()
-//    }
-//}
+struct InViteCodeView_Previews: PreviewProvider {
+    static var previews: some View {
+        InViteCodeView(store: Store(initialState: .init(), reducer: {
+            InViteCodeFeature()
+        }))
+    }
+}
 
