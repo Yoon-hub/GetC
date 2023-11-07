@@ -10,16 +10,17 @@ import Foundation
 
 import ComposableArchitecture
 import TCACoordinators
+import GetCKit
 
 public struct AuthCoordinator: Reducer {
     
     init() {
-        print("AuthCoordinator init")
+       // Utility.print("AuthCoordinator init")
     }
     
     public struct State: Equatable, IndexedRouterState {
         static let initialState = State(
-            routes: [.root(.setOnBoarding(.init()))]
+            routes: [.root(.setOnBoarding(.init()), embedInNavigationView: true)]
         )
         public var routes: [Route<AuthScreen.State>]
     }
@@ -32,10 +33,24 @@ public struct AuthCoordinator: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-                
+            case .routeAction(_, action: .setOnBoarding(.InvitedButtonTap)):
+                state.routes.append(.push(.setInViteCode(.init())))
+                return .none
+            case .routeAction(_, action: .setInViteCode(.toTogehterView)):
+                state.routes.append(.push(.setTogether(.init())))
+                return .none
+            case .routeAction(_, action: .setTogether(.navigationButtonTap)), .routeAction(_, action: .setInViteCode(.navigationButtonTap)), .routeAction(_, action: .setRegist(.navigationButtonTap)):
+                state.routes.pop()
+                return .none
+            case .routeAction(_, action: .setTogether(.makeAccoutButtonTap)):
+                state.routes.append(.push(.setRegist(.init())))
+                return .none
             default:
                 return .none
             }
+        }
+        .forEachRoute {
+            AuthScreen()
         }
 
     }

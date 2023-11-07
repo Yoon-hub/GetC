@@ -15,11 +15,15 @@ public struct AuthScreen: Reducer {
     public enum State: Equatable {
         case setOnBoarding(OnBoardingFeature.State)
         case setInViteCode(InViteCodeFeature.State)
+        case setTogether(TogetherViewFeature.State)
+        case setRegist(RegistFeature.State)
     }
     
     public enum Action {
         case setOnBoarding(OnBoardingFeature.Action)
         case setInViteCode(InViteCodeFeature.Action)
+        case setTogether(TogetherViewFeature.Action)
+        case setRegist(RegistFeature.Action)
     }
     
     public var body: some ReducerOf<Self> {
@@ -29,6 +33,14 @@ public struct AuthScreen: Reducer {
         
         Scope(state: /State.setInViteCode, action: /Action.setInViteCode) {
             InViteCodeFeature()
+        }
+        
+        Scope(state: /State.setTogether, action: /Action.setTogether) {
+            TogetherViewFeature()
+        }
+        
+        Scope(state: /State.setRegist, action: /Action.setRegist) {
+            RegistFeature()
         }
     }
 }

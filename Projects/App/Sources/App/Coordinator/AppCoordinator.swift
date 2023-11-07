@@ -10,16 +10,17 @@ import Foundation
 
 import ComposableArchitecture
 import TCACoordinators
+import GetCKit
 
 public struct AppCoordinator: Reducer {
     
     init() {
-        print("AppCoordinator init")
+        Utility.print("AppCoordinator init")
     }
     
     public struct State: Equatable, IndexedRouterState {
         static let initialState = State(
-            routes: [.root(.splash(.init()))]
+            routes: [.root(.splash(.init()), embedInNavigationView: true)]
         )
         public var routes: [Route<AppScreen.State>]
     }
@@ -36,7 +37,7 @@ public struct AppCoordinator: Reducer {
                 state.routes = [
                   .root(
                     .auth(.initialState)
-                  )
+                  , embedInNavigationView: true)
                 ]
                 return .none
             default:
