@@ -18,7 +18,9 @@ let netwrokKitTargets: [Target] = [
         deploymentTarget: .iOS(targetVersion: "16.0", devices: [.iphone]),
         infoPlist: .extendingDefault(with: netwrokKitinfoPlist),
         sources: ["Sources/**"],
-        dependencies: [])
+        dependencies: [
+            .external(name: "Alamofire")
+        ])
 ]
 
 let netwrokKitproject = Project.init(name: "NetworkKit",
