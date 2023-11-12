@@ -19,7 +19,8 @@ let netwrokKitTargets: [Target] = [
         infoPlist: .extendingDefault(with: netwrokKitinfoPlist),
         sources: ["Sources/**"],
         dependencies: [
-            .external(name: "Alamofire")
+            .external(name: "Alamofire"),
+            .external(name: "ComposableArchitecture")
         ])
 ]
 
