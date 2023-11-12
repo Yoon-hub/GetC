@@ -28,7 +28,23 @@ public struct RegistView: View {
             AuthTextField(text: viewStore.binding(get: \.emailText, send: RegistFeature.Action.emailTextFieldEdit), placeholder: "이메일")
             Spacer()
                 .frame(height: 16)
-            AuthTextField(text: viewStore.binding(get: \.passwordText, send: RegistFeature.Action.passwordTextFieldEdit), placeholder: "비밀번호")
+            
+            Button {
+                viewStore.send(.pinNumberButtonTap)
+            } label: {
+                Text("PIN번호")
+                    .padding(.leading, 14)
+                    .font(.system(size: 22))
+                    .foregroundColor(Color(UIColor.systemGray3))
+                    .frame(height: 60)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color(UIColor.systemGray3))
+                    )
+            }
+            
+            
             Spacer()
             Button {
     

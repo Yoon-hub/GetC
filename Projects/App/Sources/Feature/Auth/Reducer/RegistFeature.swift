@@ -16,9 +16,9 @@ public struct RegistFeature: Reducer {
     
     public enum Action {
         case emailTextFieldEdit(text: String)
-        case passwordTextFieldEdit(text: String)
         
         case navigationButtonTap
+        case pinNumberButtonTap
     }
     
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
@@ -26,10 +26,9 @@ public struct RegistFeature: Reducer {
         case .emailTextFieldEdit(let text):
             state.emailText = text
             return .none
-        case .passwordTextFieldEdit(let text):
-            state.passwordText = text
-            return .none
         case .navigationButtonTap:
+            return .none
+        case .pinNumberButtonTap:
             return .none
         default:
             return .none
