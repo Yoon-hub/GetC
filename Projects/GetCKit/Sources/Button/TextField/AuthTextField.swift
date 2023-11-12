@@ -12,10 +12,12 @@ public struct AuthTextField: View {
     
     @Binding public var text: String
     public var placeholder: String
+    public var error: Bool
     
-    public init(text: Binding<String>, placeholder: String = "") {
+    public init(text: Binding<String>, placeholder: String = "", error: Bool = true) {
         self._text = text
         self.placeholder = placeholder
+        self.error = error
     }
     
     public var body: some View {
@@ -25,7 +27,7 @@ public struct AuthTextField: View {
             .padding(.horizontal, 12)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(UIColor.systemGray3), lineWidth: 1)
+                    .stroke(error ? Color(UIColor.systemGray3) : Color.red, lineWidth: 1)
             )
             .autocapitalization(.none)
     }

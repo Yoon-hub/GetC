@@ -45,6 +45,12 @@ public struct AuthCoordinator: Reducer {
             case .routeAction(_, action: .setTogether(.makeAccoutButtonTap)):
                 state.routes.append(.push(.setRegist(.init())))
                 return .none
+            case .routeAction(_, action: .setRegist(.pinNumberButtonTap)):
+                state.routes.append(.cover(.setPinNumber(.init()), embedInNavigationView: true))
+                return .none
+            case .routeAction(_, action: .setPinNumber(.closeButtonTap)):
+                state.routes.goBack()
+                return .none
             default:
                 return .none
             }
