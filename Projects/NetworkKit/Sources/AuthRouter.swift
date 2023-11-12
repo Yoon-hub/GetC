@@ -12,7 +12,7 @@ import Alamofire
 
 let BASE_URL = "http://13.209.157.128:8080/api/"
 
-enum AuthRouter: URLRequestConvertible {
+public enum AuthRouter: URLRequestConvertible {
     case chkCode(code: String)
     
     var baseURL: URL {
@@ -47,7 +47,7 @@ enum AuthRouter: URLRequestConvertible {
         }
     }
     
-    func asURLRequest() throws -> URLRequest {
+    public func asURLRequest() throws -> URLRequest {
         let url = baseURL.appendingPathComponent(endPoint)
         
         var request = URLRequest(url: url)
