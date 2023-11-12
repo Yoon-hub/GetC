@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum ServerErrorCode: Int {
-    case validCode = 0000
-    case invalidCode = 9999
-    case expiredCode = 0020
+public enum ServerErrorCode: String {
+    case validCode = "0000"
+    case invalidCode = "9999"
+    case expiredCode = "0020"
 }
