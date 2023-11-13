@@ -32,7 +32,7 @@ public struct RegistView: View {
             Button {
                 viewStore.send(.pinNumberButtonTap)
             } label: {
-                Text("PIN번호")
+                Text(viewStore.passwordText.count == 0 ? "PIN번호" : "● ● ● ● ● ●")
                     .padding(.leading, 14)
                     .font(.system(size: 22))
                     .foregroundColor(Color(UIColor.systemGray3))
@@ -51,7 +51,7 @@ public struct RegistView: View {
             } label: {
                 Text("계정 만들기")
             }
-            .buttonStyle(CommonButtonStyle())
+            .buttonStyle(viewStore.state.emailText.count == 0 || viewStore.state.passwordText.count == 0 ?  DisableButtonStyle().any : CommonButtonStyle().any)
             Spacer()
                 .frame(height: 16)
             
@@ -60,6 +60,16 @@ public struct RegistView: View {
         .navigationBackButtonSet {
             viewStore.send(.navigationButtonTap)
         }
+        .fullScreenCover(
+            store: self.store.scope(
+              state: \.$addContact,
+              action: { .addContact($0) }
+            )
+          ) { addContactStore in
+            NavigationStack {
+              PinNumberView(store: addContactStore)
+            }
+          }
     }
 }
 

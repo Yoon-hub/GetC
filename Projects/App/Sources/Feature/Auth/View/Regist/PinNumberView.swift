@@ -36,7 +36,7 @@ struct PinNumberView: View {
 
             Spacer()
                 .frame(height: 112)
-            Text("PIN번호를 입력하세요")
+            Text(viewStore.state.pinNumberState == .first ? "PIN번호를 입력하세요" : "PIN번호를 재입력하세요")
                 .font(.system(size: 19))
                 .fontWeight(.bold)
                 .foregroundColor(.black)
@@ -55,6 +55,11 @@ struct PinNumberView: View {
                 Spacer()
                     .padding(.horizontal, 16)
             }
+            Text(viewStore.pinNumberErrorLabel.rawValue)
+                .font(.system(size: 14))
+                .foregroundColor(.red)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 52)
             
             Spacer()
                 .frame(height: 200)
@@ -64,7 +69,7 @@ struct PinNumberView: View {
                     HStack {
                         ForEach(0..<3) { row in
                             Button {
-                                
+                                viewStore.send(.padButtonTap(column: column, row: row))
                             } label: {
                                 Text(viewStore.state.padArray[column][row])
                                     .font(.system(size: 28))

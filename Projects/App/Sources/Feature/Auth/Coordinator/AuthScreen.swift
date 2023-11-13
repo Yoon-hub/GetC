@@ -17,7 +17,7 @@ public struct AuthScreen: Reducer {
         case setInViteCode(InViteCodeFeature.State)
         case setTogether(TogetherViewFeature.State)
         case setRegist(RegistFeature.State)
-        case setPinNumber(PinNumberFeature.State)
+        //case setPinNumber(PinNumberFeature.State)
     }
     
     public enum Action {
@@ -25,7 +25,7 @@ public struct AuthScreen: Reducer {
         case setInViteCode(InViteCodeFeature.Action)
         case setTogether(TogetherViewFeature.Action)
         case setRegist(RegistFeature.Action)
-        case setPinNumber(PinNumberFeature.Action)
+       // case setPinNumber(PinNumberFeature.Action)
     }
     
     public var body: some ReducerOf<Self> {
@@ -45,8 +45,8 @@ public struct AuthScreen: Reducer {
             RegistFeature()
         }
         
-        Scope(state: /State.setPinNumber, action: /Action.setPinNumber) {
-            PinNumberFeature()
-        }
+//        Scope(state: /State.setPinNumber, action: /Action.setPinNumber) {
+//            PinNumberFeature()
+//        }
     }
 }

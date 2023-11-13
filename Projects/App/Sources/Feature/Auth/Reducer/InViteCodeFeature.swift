@@ -41,7 +41,9 @@ public struct InViteCodeFeature: Reducer {
             return .none
         case .authButtonTap:
             let code = state.codeText
-            if code == "aaaaaa" {return .send(.toTogehterView)}
+            #if DEBUG
+            if code == "aaaaaa" {return .send(.toTogehterView)} // master Code
+            #endif
             return .run { send in
                 
                 let response = await apiService.apiRequset(type: ChkCodeDTO.self, router: AuthRouter.chkCode(code: code))

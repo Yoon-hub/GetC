@@ -23,6 +23,7 @@ public struct AuthCoordinator: Reducer {
             routes: [.root(.setOnBoarding(.init()), embedInNavigationView: true)]
         )
         public var routes: [Route<AuthScreen.State>]
+        public var pinNumber: String?
     }
     
     public enum Action: IndexedRouterAction {
@@ -33,7 +34,7 @@ public struct AuthCoordinator: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .routeAction(_, action: .setOnBoarding(.InvitedButtonTap)):
+            case .routeAction(_, action: AuthScreen.Action.setOnBoarding(.InvitedButtonTap)):
                 state.routes.append(.push(.setInViteCode(.init())))
                 return .none
             case .routeAction(_, action: .setInViteCode(.toTogehterView)):
@@ -45,12 +46,15 @@ public struct AuthCoordinator: Reducer {
             case .routeAction(_, action: .setTogether(.makeAccoutButtonTap)):
                 state.routes.append(.push(.setRegist(.init())))
                 return .none
-            case .routeAction(_, action: .setRegist(.pinNumberButtonTap)):
-                state.routes.append(.cover(.setPinNumber(.init()), embedInNavigationView: true))
-                return .none
-            case .routeAction(_, action: .setPinNumber(.closeButtonTap)):
-                state.routes.goBack()
-                return .none
+//            case .routeAction(_, action: .setRegist(.pinNumberButtonTap)):
+//                state.routes.append(.cover(.setPinNumber(.init()), embedInNavigationView: true))
+//                return .none
+//            case .routeAction(_, action: .setPinNumber(.closeButtonTap)):
+//                state.routes.goBack()
+//                return .none
+//            case .routeAction(_, action: .setPinNumber(.passPinNumber(pin: let pin))):
+//                state.routes.goBack()
+//                return .none
             default:
                 return .none
             }
@@ -62,3 +66,17 @@ public struct AuthCoordinator: Reducer {
     }
 }
 
+
+
+extension Array where Element: RouteProtocol {
+  mutating func findAndMutate<ElementSubstate>(_ casePath: CasePath<Element.Screen, ElementSubstate>, _ onlyMostRecent: Bool = true, transform: (inout ElementSubstate) -> Void) {
+    for (route, index) in zip(self, indices).reversed() {
+      guard var substate = casePath.extract(from: route.screen) else { continue }
+      transform(&substate)
+      self[index].screen = casePath.embed(substate)
+      if onlyMostRecent {
+        return
+      }
+    }
+  }
+}
