@@ -15,6 +15,7 @@ public struct RegistView: View {
     
     let store: StoreOf<RegistFeature>
     @ObservedObject var viewStore: ViewStoreOf<RegistFeature>
+    @State var text: String = ""
     
     init(store: StoreOf<RegistFeature>) {
         self.store = store
@@ -25,7 +26,7 @@ public struct RegistView: View {
         VStack {
             Spacer()
                 .frame(height: 112)
-            AuthTextField(text: viewStore.binding(get: \.emailText, send: RegistFeature.Action.emailTextFieldEdit), placeholder: "이메일")
+            AuthTextField(text: viewStore.binding(get: \.emailText, send: RegistFeature.Action.emailTextFieldEdit), placeholder: "아이디")
             Spacer()
                 .frame(height: 16)
             
@@ -47,7 +48,7 @@ public struct RegistView: View {
             
             Spacer()
             Button {
-    
+                viewStore.send(.registButtonTap)
             } label: {
                 Text("계정 만들기")
             }
@@ -62,14 +63,24 @@ public struct RegistView: View {
         }
         .fullScreenCover(
             store: self.store.scope(
-              state: \.$addContact,
-              action: { .addContact($0) }
+                state: \.$addContact,
+                action: { .addContact($0) }
             )
-          ) { addContactStore in
+        ) { addContactStore in
             NavigationStack {
-              PinNumberView(store: addContactStore)
+                PinNumberView(store: addContactStore)
             }
-          }
+        }
+        
+        .alert("닉네임을 입력하세요", isPresented: viewStore.binding(get: \.shouldShowAlert, send: RegistFeature.Action.alertAction)) {
+            TextField("닉네임", text: $text)
+            Button("확인") {
+                print(text)
+            }
+        } message: {
+        }
+        
+        
     }
 }
 
@@ -80,3 +91,6 @@ struct RegistView_Previews: PreviewProvider {
         }))
     }
 }
+
+
+//viewStore.binding(get: \.shouldShowAlert, send: RegistFeature.Action.alertAction)

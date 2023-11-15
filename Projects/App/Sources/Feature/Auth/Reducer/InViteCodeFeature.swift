@@ -8,6 +8,7 @@
 
 import Foundation
 import NetworkKit
+import GetCKit
 
 import ComposableArchitecture
 import TCACoordinators
@@ -62,6 +63,7 @@ public struct InViteCodeFeature: Reducer {
                 
             }
         case .toTogehterView:
+            UserDefaultWrapper.pinNumber = state.codeText
             return .none
         case .inValidCode:
             state.validCode = false

@@ -71,9 +71,7 @@ public struct PinNumberFeature: Reducer {
                     state.pinNumberStore = ""
                     state.pinNumber = ""
                     state.pinNumberErrorLabel = .different
-                }
-                
-                if state.pinNumber == state.pinNumberStore { // 일치할 경우
+                } else if state.pinNumber == state.pinNumberStore { // 일치할 경우
                     return .send(.passPinNumber(pin: state.pinNumber))
                 }
                 

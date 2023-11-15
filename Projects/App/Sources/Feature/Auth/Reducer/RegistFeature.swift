@@ -14,17 +14,18 @@ public struct RegistFeature: Reducer {
         @PresentationState var addContact: PinNumberFeature.State?
         var emailText = ""
         var passwordText = ""
+        var shouldShowAlert: Bool = false
     }
     
     public enum Action {
         case addContact(PresentationAction<PinNumberFeature.Action>)
         case emailTextFieldEdit(text: String)
-        
+        case alertAction
         case chagnePinNumber
         
         case navigationButtonTap
         case pinNumberButtonTap
-        
+        case registButtonTap
     }
     
     public var body: some ReducerOf<Self> {
@@ -45,6 +46,12 @@ public struct RegistFeature: Reducer {
             case .addContact(.presented(.closeButtonTap)):
                 state.addContact = nil
                 return .none
+            case .registButtonTap:
+                state.shouldShowAlert = true
+                return .none
+            case .alertAction:
+                state.shouldShowAlert = false
+                return .none
             default:
                 return .none
             }
@@ -54,19 +61,5 @@ public struct RegistFeature: Reducer {
         }
     }
     
-//    public func reduce(into state: inout State, action: Action) -> Effect<Action> {
-//
-//        switch action {
-//        case .emailTextFieldEdit(let text):
-//            state.emailText = text
-//            return .none
-//        case .navigationButtonTap:
-//            return .none
-//        case .pinNumberButtonTap:
-//            return .none
-//        default:
-//            return .none
-//        }
-//    }
 }
 
