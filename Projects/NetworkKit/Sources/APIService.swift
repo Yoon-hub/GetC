@@ -11,18 +11,29 @@ import Combine
 import ComposableArchitecture
 
 import Alamofire
+import GetCKit
 
 public final class APIService {
     
-    public func apiRequset<T: Decodable>(type: T.Type, router: AuthRouter) async -> Result<T, Error> {
-        let response = AF.request(router).serializingDecodable(T.self)
+    public func apiRequset<T: Decodable>(type: T.Type, router: AuthRouter) async -> T {
         
-        switch await response.result {
-        case .success(let data):
-            return .success(data)
-        case .failure(let error):
-            return .failure(error)
-        }
+        Utility.print("✈️Request: \(router.endPoint)")
+        Utility.print("✉️Param: \(router.parameters ?? [:])")
+        
+        return await withCheckedContinuation({ continuation in
+            AF.request(router)
+                .responseDecodable(of: T.self) { response in
+                    Utility.print("📨Response: \(response)")
+                    
+                    switch response.result {
+                    case .success(let result):
+                        Utility.print("📨result: \(result)")
+                        continuation.resume(returning: result)
+                    case .failure(let error):
+                        Utility.print("📨Error: \(error)")
+                    }
+                }
+        })
         
     }
 }

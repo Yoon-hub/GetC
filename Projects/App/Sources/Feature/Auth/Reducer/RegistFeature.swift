@@ -9,24 +9,36 @@
 import Foundation
 import ComposableArchitecture
 
+import NetworkKit
+import GetCKit
+
 public struct RegistFeature: Reducer {
     public struct State: Equatable {
         @PresentationState var addContact: PinNumberFeature.State?
         var emailText = ""
         var passwordText = ""
-        var shouldShowAlert: Bool = false
+        var shouldShowNicknameAlert: Bool = false
+        var shouldShowErrorAlert: Bool = false
+        var errorText = ""
     }
     
     public enum Action {
         case addContact(PresentationAction<PinNumberFeature.Action>)
         case emailTextFieldEdit(text: String)
         case alertAction
+        case errorMessageAction
         case chagnePinNumber
+        case nickNameInput(nickName: String)
+        
+        //inner
+        case errorMessage(message: String)
         
         case navigationButtonTap
         case pinNumberButtonTap
         case registButtonTap
     }
+    
+    @Dependency(\.apiService) var apiService
     
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -47,11 +59,28 @@ public struct RegistFeature: Reducer {
                 state.addContact = nil
                 return .none
             case .registButtonTap:
-                state.shouldShowAlert = true
+                state.shouldShowNicknameAlert = true
                 return .none
             case .alertAction:
-                state.shouldShowAlert = false
+                state.shouldShowNicknameAlert = false
                 return .none
+            case .nickNameInput(let nickName):
+                let id = state.emailText
+                let pw = state.passwordText
+                return .run { send in
+                    let response = await apiService.apiRequset(type: SignUpDTO.self, router: AuthRouter.signUp(id: id, pw: pw, nickName: nickName, joinCode: UserDefaultWrapper.pinNumber))
+                    
+                    if let data = response.data {
+                        // 메인화면 진입
+                    } else {
+                        await send(.errorMessage(message: response.message))
+                    }
+                }
+            case .errorMessage(let message):
+                state.errorText = message
+                state.shouldShowErrorAlert = true
+                return .none
+                
             default:
                 return .none
             }

@@ -72,14 +72,22 @@ public struct RegistView: View {
             }
         }
         
-        .alert("닉네임을 입력하세요", isPresented: viewStore.binding(get: \.shouldShowAlert, send: RegistFeature.Action.alertAction)) {
+        .alert("닉네임을 입력하세요", isPresented: viewStore.binding(get: \.shouldShowNicknameAlert, send: RegistFeature.Action.alertAction)) {
             TextField("닉네임", text: $text)
             Button("확인") {
-                print(text)
+                viewStore.send(.nickNameInput(nickName: text))
             }
         } message: {
         }
-        
+//        .alert("회원가입 오류", isPresented: viewStore.binding(get: \.shouldShowErrorAlert, send: RegistFeature.Action.errorMessageAction)) {
+//            Text(viewStore.state.errorText)
+//        }
+        .alert("회원가입 오류", isPresented: viewStore.binding(get: \.shouldShowErrorAlert, send: RegistFeature.Action.errorMessageAction)) {
+            
+        } message: {
+            Text(viewStore.state.errorText)
+        }
+
         
     }
 }

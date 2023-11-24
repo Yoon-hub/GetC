@@ -46,18 +46,11 @@ public struct InViteCodeFeature: Reducer {
             if code == "aaaaaa" {return .send(.toTogehterView)} // master Code
             #endif
             return .run { send in
-                
-                let response = await apiService.apiRequset(type: ChkCodeDTO.self, router: AuthRouter.chkCode(code: code))
-                switch response {
-                case .success(let data):
-                    print(data)
-                    switch data.code {
-                    case ServerErrorCode.validCode.rawValue:
-                        await send(.toTogehterView)
-                    default:
-                        await send(.inValidCode)
-                    }
-                case .failure(let error):
+                let data = await apiService.apiRequset(type: ChkCodeDTO.self, router: AuthRouter.chkCode(code: code))
+                switch data.code {
+                case ServerErrorCode.validCode.rawValue:
+                    await send(.toTogehterView)
+                default:
                     await send(.inValidCode)
                 }
                 

@@ -14,6 +14,7 @@ let BASE_URL = "http://13.209.157.128:8080/api/"
 
 public enum AuthRouter: URLRequestConvertible {
     case chkCode(code: String)
+    case signUp(id: String, pw: String, nickName: String, joinCode: String)
     
     var baseURL: URL {
         return URL(string: BASE_URL)!
@@ -23,6 +24,8 @@ public enum AuthRouter: URLRequestConvertible {
         switch self {
         case .chkCode(let code):
             return "invite/chk-code/\(code)"
+        case .signUp:
+            return "member/join"
         }
     }
     
@@ -30,6 +33,8 @@ public enum AuthRouter: URLRequestConvertible {
         switch self {
         case .chkCode:
             return .get
+        case .signUp:
+            return .post
         }
     }
     
@@ -37,6 +42,8 @@ public enum AuthRouter: URLRequestConvertible {
         switch self {
         case .chkCode:
             return ["Content-Type" : "application/x-www-form-urlencoded"]
+        case .signUp:
+            return ["Content-Type" : "application/json"]
         }
     }
     
@@ -44,6 +51,16 @@ public enum AuthRouter: URLRequestConvertible {
         switch self {
         case .chkCode:
             return nil
+        case let .signUp(id, pw, nickName, joinCode):
+            let parameters: [String: Any] = [
+                "memberId": id,
+                "password": pw,
+                "nickname": nickName,
+                "joinCode": joinCode,
+                "memberStatus": "0"
+            ]
+            
+            return parameters
         }
     }
     
@@ -57,8 +74,9 @@ public enum AuthRouter: URLRequestConvertible {
         switch self {
         case .chkCode:
             request = try URLEncoding.default.encode(request, with: parameters)
+        case .signUp:
+            request = try JSONEncoding.default.encode(request, with: parameters)
         }
-        
         return request
     }
     

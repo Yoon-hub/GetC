@@ -26,3 +26,4 @@ public struct DataClass: Codable {
         case inviteCode, isUsed, createdAt
     }
 }
+
