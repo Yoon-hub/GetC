@@ -21,6 +21,8 @@ public struct AuthCoordinatorView: View {
                     CaseLet(/AuthScreen.State.setTogether, action: AuthScreen.Action.setTogether, then: TogetherView.init)
                 case .setRegist:
                     CaseLet(/AuthScreen.State.setRegist, action: AuthScreen.Action.setRegist, then: RegistView.init)
+                case .setSignIn:
+                    CaseLet(/AuthScreen.State.setSignIn, action: AuthScreen.Action.setSignIn, then: SignInView.init)
 //                case .setPinNumber:
 //                    CaseLet(/AuthScreen.State.setPinNumber, action: AuthScreen.Action.setPinNumber, then: PinNumberView.init)
                 }

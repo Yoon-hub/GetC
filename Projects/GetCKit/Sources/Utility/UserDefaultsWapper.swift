@@ -34,3 +34,4 @@ public struct UserDefaultWrapper {
     @UserDefault(key: "pinNumber", defaultValue: "")
     static public var pinNumber: String
 }
+

@@ -17,11 +17,14 @@ public struct OnBoardingFeature: Reducer {
     
     public enum Action {
         case InvitedButtonTap
+        case loginButtonTap
     }
     
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
         case .InvitedButtonTap:
+            return .none
+        case .loginButtonTap:
             return .none
         }
     }

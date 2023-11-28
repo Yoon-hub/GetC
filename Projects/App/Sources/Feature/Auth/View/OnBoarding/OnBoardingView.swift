@@ -44,6 +44,7 @@ struct OnBoardingView: View {
                 HStack {
                     Text("이미 계정이 있어요.")
                     Button {
+                        viewStore.send(.loginButtonTap)
                     } label: {
                         Text("로그인")
                             .foregroundColor(GetCKitAsset.color2.swiftUIColor)
@@ -55,6 +56,7 @@ struct OnBoardingView: View {
                 
             }
         }
+        
     }
 }
 
