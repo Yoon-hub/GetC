@@ -39,6 +39,9 @@ public struct SignInFeature: Reducer {
                 return .none
             case .signInButtonTap:
                 return .none
+            case .addContact(.presented(.closeButtonTap)):
+                state.addContact = nil
+                return .none
             case .addContact(.presented(.passPinNumber(pin: let pin))):
                 state.passwordText = pin
                 state.addContact = nil

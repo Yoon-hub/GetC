@@ -14,7 +14,7 @@ public struct TogetherViewFeature: Reducer {
         
     }
     
-    public enum Action {
+    public enum Action{
         case navigationButtonTap
         case makeAccoutButtonTap
     }
