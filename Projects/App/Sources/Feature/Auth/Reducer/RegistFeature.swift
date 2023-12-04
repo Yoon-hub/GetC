@@ -23,15 +23,20 @@ public struct RegistFeature: Reducer {
     }
     
     public enum Action {
+        
+        //MARK: - UserInteraction
         case addContact(PresentationAction<PinNumberFeature.Action>)
         case emailTextFieldEdit(text: String)
-        case alertAction
+        
         case errorMessageAction
         case chagnePinNumber
         case nickNameInput(nickName: String)
+
         
-        //inner
+        //MARK: - Inner ACtion
         case errorMessage(message: String)
+        case alertAction
+        case routeToFeed
         
         case navigationButtonTap
         case pinNumberButtonTap
@@ -72,6 +77,7 @@ public struct RegistFeature: Reducer {
                     
                     if let data = response.data {
                         // 메인화면 진입
+                        await send(.routeToFeed)
                     } else {
                         await send(.errorMessage(message: response.message))
                     }

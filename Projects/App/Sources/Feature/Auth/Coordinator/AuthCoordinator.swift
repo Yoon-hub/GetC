@@ -51,7 +51,7 @@ public struct AuthCoordinator: Reducer {
             case .routeAction(_, action: .setOnBoarding(.loginButtonTap)):
                 state.routes.append(.push(.setSignIn(.init())))
                 return .none
-            case .routeAction(_, action: .setSignIn(.routeToFeed)):
+            case .routeAction(_, action: .setSignIn(.routeToFeed)), .routeAction(_, action: .setRegist(.routeToFeed)):
                 return .send(.moveToFeed)
             default:
                 return .none

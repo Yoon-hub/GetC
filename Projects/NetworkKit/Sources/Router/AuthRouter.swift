@@ -10,14 +10,12 @@ import Foundation
 
 import Alamofire
 
-public enum AuthRouter: URLRequestConvertible {
+let BASE_URL = URL(string: "http://13.209.157.128:8080/api/")!
+
+public enum AuthRouter: RouterProtocol {
     case chkCode(code: String)
     case signUp(id: String, pw: String, nickName: String, joinCode: String)
     case signIn(id: String, pw: String)
-    
-    var baseURL: URL {
-        return URL(string: "http://13.209.157.128:8080/api/")!
-    }
     
     var endPoint: String {
         switch self {
@@ -60,45 +58,21 @@ public enum AuthRouter: URLRequestConvertible {
                 "joinCode": joinCode,
                 "memberStatus": "0"
             ]
-        case let .signIn(id, pw):
-            // Note: 아이디와 비밀번호를 URL 쿼리스트링으로 전달
-            return [
-                "memberId": id,
-                "password": pw
-            ]
+        case .signIn:
+            return nil
         }
     }
     
-    public func asURLRequest() throws -> URLRequest {
-        var urlComponents = URLComponents(url: baseURL.appendingPathComponent(endPoint), resolvingAgainstBaseURL: true)
-        
+    var queryItems: [URLQueryItem]? {
         switch self {
-        case .signIn(let id, let pw):
-            // .signIn 케이스에서는 아이디와 비밀번호를 URL 쿼리스트링으로 추가
-            let queryItems = [
+        case .chkCode, .signUp:
+            return nil
+        case let .signIn(id, pw):
+            return [
                 URLQueryItem(name: "memberId", value: id),
                 URLQueryItem(name: "password", value: pw)
             ]
-            urlComponents?.queryItems = queryItems
-        default:
-            break
         }
-        
-        guard let url = urlComponents?.url else {
-            throw AFError.parameterEncodingFailed(reason: .missingURL)
-        }
-        
-        var request = URLRequest(url: url)
-        request.method = method
-        request.headers = headers
-        
-        switch self {
-        case .chkCode:
-            request = try URLEncoding.default.encode(request, with: parameters)
-        case .signUp, .signIn:
-            request = try JSONEncoding.default.encode(request, with: nil) // 파라미터는 URL 쿼리스트링으로 처리
-        }
-        
-        return request
     }
+
 }
