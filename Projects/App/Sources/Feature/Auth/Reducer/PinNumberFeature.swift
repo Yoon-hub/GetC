@@ -13,6 +13,7 @@ import ComposableArchitecture
 public enum PinNumberFlow {
     case first
     case second
+    case signIn
 }
 
 public enum PinNumberErrorLable: String {
@@ -27,7 +28,7 @@ public struct PinNumberFeature: Reducer {
         public let padArray = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"], ["", "0", "←"]]
         public var pinNumberStore = ""
         public var pinNumber = ""
-        public var pinNumberState: PinNumberFlow = .first
+        public var pinNumberState: PinNumberFlow
         public var pinNumberErrorLabel: PinNumberErrorLable = .nono
     }
     
@@ -59,6 +60,10 @@ public struct PinNumberFeature: Reducer {
         case .closeButtonTap:
             return .none
         case .sixNumberInput:
+            
+            if state.pinNumberState == .signIn { // 로그인 시 사용
+                return .send(.passPinNumber(pin: state.pinNumber))
+            }
 
             if state.pinNumberState == .first { // 첫번째 6개
                 state.pinNumberState = .second

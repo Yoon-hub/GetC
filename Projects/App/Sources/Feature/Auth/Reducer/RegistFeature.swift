@@ -49,7 +49,7 @@ public struct RegistFeature: Reducer {
             case .navigationButtonTap:
                 return .none
             case .pinNumberButtonTap:
-                state.addContact = PinNumberFeature.State()
+                state.addContact = PinNumberFeature.State(pinNumberState: .first)
                 return .none
             case .addContact(.presented(.passPinNumber(pin: let pin))):
                 state.passwordText = pin
@@ -86,7 +86,7 @@ public struct RegistFeature: Reducer {
             }
         }
         .ifLet(\.$addContact, action: /Action.addContact) {
-          PinNumberFeature()
+            PinNumberFeature()
         }
     }
     

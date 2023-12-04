@@ -23,7 +23,7 @@ public struct SplashView: View {
         WithViewStore(store, observe: {$0}) { viewStore in
             Image("GetC")
                 .resizable()
-                .frame(width: 100, height: 100)
+                .frame(width: 200, height: 200)
                 .opacity(opacity)
                 
                 .onAppear {

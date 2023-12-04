@@ -29,6 +29,8 @@ public struct AuthCoordinator: Reducer {
     public enum Action: IndexedRouterAction {
         case routeAction(Int, action:AuthScreen.Action)
         case updateRoutes([Route<AuthScreen.State>])
+        
+        case moveToFeed
     }
     
     public var body: some ReducerOf<Self> {
@@ -40,7 +42,7 @@ public struct AuthCoordinator: Reducer {
             case .routeAction(_, action: .setInViteCode(.toTogehterView)):
                 state.routes.append(.push(.setTogether(.init())))
                 return .none
-            case .routeAction(_, action: .setTogether(.navigationButtonTap)), .routeAction(_, action: .setInViteCode(.navigationButtonTap)), .routeAction(_, action: .setRegist(.navigationButtonTap)):
+            case .routeAction(_, action: .setTogether(.navigationButtonTap)), .routeAction(_, action: .setInViteCode(.navigationButtonTap)), .routeAction(_, action: .setRegist(.navigationButtonTap)), .routeAction(_, action: .setSignIn(.navigationBackButtonTap)):
                 state.routes.pop()
                 return .none
             case .routeAction(_, action: .setTogether(.makeAccoutButtonTap)):
@@ -49,6 +51,8 @@ public struct AuthCoordinator: Reducer {
             case .routeAction(_, action: .setOnBoarding(.loginButtonTap)):
                 state.routes.append(.push(.setSignIn(.init())))
                 return .none
+            case .routeAction(_, action: .setSignIn(.routeToFeed)):
+                return .send(.moveToFeed)
             default:
                 return .none
             }

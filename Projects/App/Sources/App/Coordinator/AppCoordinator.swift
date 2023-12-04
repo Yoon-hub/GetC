@@ -40,6 +40,13 @@ public struct AppCoordinator: Reducer {
                   , embedInNavigationView: true)
                 ]
                 return .none
+            case .routeAction(_, action: .auth(.moveToFeed)):
+                state.routes = [
+                  .root(
+                    .feed(.initialState)
+                  , embedInNavigationView: true)
+                ]
+                return .none
             default:
                 return .none
             }

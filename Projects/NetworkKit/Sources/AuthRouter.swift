@@ -10,14 +10,13 @@ import Foundation
 
 import Alamofire
 
-let BASE_URL = "http://13.209.157.128:8080/api/"
-
 public enum AuthRouter: URLRequestConvertible {
     case chkCode(code: String)
     case signUp(id: String, pw: String, nickName: String, joinCode: String)
+    case signIn(id: String, pw: String)
     
     var baseURL: URL {
-        return URL(string: BASE_URL)!
+        return URL(string: "http://13.209.157.128:8080/api/")!
     }
     
     var endPoint: String {
@@ -26,6 +25,8 @@ public enum AuthRouter: URLRequestConvertible {
             return "invite/chk-code/\(code)"
         case .signUp:
             return "member/join"
+        case .signIn:
+            return "member/login"
         }
     }
     
@@ -33,7 +34,7 @@ public enum AuthRouter: URLRequestConvertible {
         switch self {
         case .chkCode:
             return .get
-        case .signUp:
+        case .signUp, .signIn:
             return .post
         }
     }
@@ -41,31 +42,51 @@ public enum AuthRouter: URLRequestConvertible {
     var headers: HTTPHeaders {
         switch self {
         case .chkCode:
-            return ["Content-Type" : "application/x-www-form-urlencoded"]
-        case .signUp:
-            return ["Content-Type" : "application/json"]
+            return ["Content-Type": "application/x-www-form-urlencoded"]
+        case .signUp, .signIn:
+            return ["Content-Type": "application/json"]
         }
     }
     
-    var parameters: [String: Any]? {
+    var parameters: Parameters? {
         switch self {
         case .chkCode:
             return nil
         case let .signUp(id, pw, nickName, joinCode):
-            let parameters: [String: Any] = [
+            return [
                 "memberId": id,
                 "password": pw,
                 "nickname": nickName,
                 "joinCode": joinCode,
                 "memberStatus": "0"
             ]
-            
-            return parameters
+        case let .signIn(id, pw):
+            // Note: 아이디와 비밀번호를 URL 쿼리스트링으로 전달
+            return [
+                "memberId": id,
+                "password": pw
+            ]
         }
     }
     
     public func asURLRequest() throws -> URLRequest {
-        let url = baseURL.appendingPathComponent(endPoint)
+        var urlComponents = URLComponents(url: baseURL.appendingPathComponent(endPoint), resolvingAgainstBaseURL: true)
+        
+        switch self {
+        case .signIn(let id, let pw):
+            // .signIn 케이스에서는 아이디와 비밀번호를 URL 쿼리스트링으로 추가
+            let queryItems = [
+                URLQueryItem(name: "memberId", value: id),
+                URLQueryItem(name: "password", value: pw)
+            ]
+            urlComponents?.queryItems = queryItems
+        default:
+            break
+        }
+        
+        guard let url = urlComponents?.url else {
+            throw AFError.parameterEncodingFailed(reason: .missingURL)
+        }
         
         var request = URLRequest(url: url)
         request.method = method
@@ -74,11 +95,10 @@ public enum AuthRouter: URLRequestConvertible {
         switch self {
         case .chkCode:
             request = try URLEncoding.default.encode(request, with: parameters)
-        case .signUp:
-            request = try JSONEncoding.default.encode(request, with: parameters)
+        case .signUp, .signIn:
+            request = try JSONEncoding.default.encode(request, with: nil) // 파라미터는 URL 쿼리스트링으로 처리
         }
+        
         return request
     }
-    
-
 }

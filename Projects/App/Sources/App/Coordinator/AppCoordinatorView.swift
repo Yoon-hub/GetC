@@ -27,6 +27,8 @@ public struct AppCoordinatorView: View {
                     CaseLet(/AppScreen.State.splash, action: AppScreen.Action.splash, then: SplashView.init)
                 case .auth:
                     CaseLet(/AppScreen.State.auth, action: AppScreen.Action.auth, then: AuthCoordinatorView.init)
+                case .feed:
+                    CaseLet(/AppScreen.State.feed, action: AppScreen.Action.feed, then: FeedCoordinatorView.init)
                 }
             }
         }

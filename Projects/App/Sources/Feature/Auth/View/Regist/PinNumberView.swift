@@ -90,7 +90,7 @@ struct PinNumberView: View {
 
 struct PinNumberView_Previews: PreviewProvider {
     static var previews: some View {
-        PinNumberView(store: Store.init(initialState: PinNumberFeature.State.init(), reducer: {
+        PinNumberView(store: Store.init(initialState: PinNumberFeature.State(pinNumberState: .first), reducer: {
             PinNumberFeature()
         }))
     }

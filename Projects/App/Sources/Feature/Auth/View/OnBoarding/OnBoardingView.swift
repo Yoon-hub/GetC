@@ -30,7 +30,7 @@ struct OnBoardingView: View {
                     .frame(height: 170)
                 Image("GetC")
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 200, height: 200)
                     
                 Spacer()
                 Button {

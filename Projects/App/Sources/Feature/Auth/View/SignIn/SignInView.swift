@@ -59,7 +59,7 @@ struct SignInView: View {
         }
         .padding(.horizontal, GetCGridRules.globalHorizontalPadding)
         .navigationBackButtonSet {
-            
+            viewStore.send(.navigationBackButtonTap)
         }
         .fullScreenCover(
             store: self.store.scope(
@@ -70,6 +70,11 @@ struct SignInView: View {
             NavigationStack {
                 PinNumberView(store: addContactStore)
             }
+        }
+        .alert("회원가입 오류", isPresented: viewStore.binding(get: \.shouldShowErrorAlert, send: SignInFeature.Action.errorMessageAction)) {
+            
+        } message: {
+            Text(viewStore.state.errorText)
         }
     }
     

@@ -35,6 +35,7 @@ public struct InViteCodeView: View {
             VStack(alignment: .leading){
                 AuthTextField(text: viewStore.binding(get: \.codeText, send: InViteCodeFeature.Action.textEditing), placeholder: "초대코드", error: viewStore.validCode)
                 
+                
                 Text("입력하신 초대코드가 존재하지 않습니다.")
                     .font(.system(size: 11))
                     .foregroundColor(.red)

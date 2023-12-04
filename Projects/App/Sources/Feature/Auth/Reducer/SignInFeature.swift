@@ -19,6 +19,8 @@ public struct SignInFeature: Reducer {
         @PresentationState var addContact: PinNumberFeature.State?
         var emailText = ""
         var passwordText = ""
+        var shouldShowErrorAlert: Bool = false
+        var errorText = ""
     }
     
     public enum Action {
@@ -26,7 +28,15 @@ public struct SignInFeature: Reducer {
         case emailTextFiledChanged(String)
         case pinNumberButtonTap
         case signInButtonTap
+        case navigationBackButtonTap
+        case errorMessageAction
+        
+        // inner
+        case errorMessage(message: String)
+        case routeToFeed
     }
+    
+    @Dependency(\.apiService) var apiService
     
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -35,10 +45,22 @@ public struct SignInFeature: Reducer {
                 state.emailText = text
                 return .none
             case .pinNumberButtonTap:
-                state.addContact = PinNumberFeature.State()
+                state.addContact = PinNumberFeature.State(pinNumberState: .signIn)
                 return .none
             case .signInButtonTap:
-                return .none
+                let id = state.emailText
+                let pw = state.passwordText
+                return .run { send in
+                    let response = await apiService.apiRequset(type: SignInDTO.self, router: AuthRouter.signIn(id: id, pw: pw))
+                    
+                    if let data = response.data {
+                        // 메인화면 진입
+                        await send(.routeToFeed)
+                    } else {
+                        await send(.errorMessage(message: response.message))
+                    }
+                    
+                }
             case .addContact(.presented(.closeButtonTap)):
                 state.addContact = nil
                 return .none
@@ -46,13 +68,24 @@ public struct SignInFeature: Reducer {
                 state.passwordText = pin
                 state.addContact = nil
                 return .none
+            case .navigationBackButtonTap:
+                return .none
+            case .errorMessage(let message):
+                state.errorText = message
+                state.shouldShowErrorAlert = true
+                return .none
+            case .routeToFeed:
+                return .none
+            case .errorMessageAction:
+                state.shouldShowErrorAlert = false
+                return .none
             default:
                 return .none
             }
             
         }
         .ifLet(\.$addContact, action: /Action.addContact) {
-          PinNumberFeature()
+            PinNumberFeature()
         }
     }
     

@@ -9,7 +9,10 @@ import Foundation
 import ProjectDescription
 
 let infoPlist: [String: Plist.Value] = [
-    "UILaunchStoryboardName":"LaunchScreen"
+    "UILaunchStoryboardName":"LaunchScreen",
+    "NSAppTransportSecurity": [
+        "NSAllowsArbitraryLoads": true
+    ]
 ]
 
 let appTargets: [Target] = [
