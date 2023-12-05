@@ -17,7 +17,7 @@ public enum AuthRouter: RouterProtocol {
     case signUp(id: String, pw: String, nickName: String, joinCode: String)
     case signIn(id: String, pw: String)
     
-    var endPoint: String {
+    public var endPoint: String {
         switch self {
         case .chkCode(let code):
             return "invite/chk-code/\(code)"
@@ -28,7 +28,7 @@ public enum AuthRouter: RouterProtocol {
         }
     }
     
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         switch self {
         case .chkCode:
             return .get
@@ -37,7 +37,7 @@ public enum AuthRouter: RouterProtocol {
         }
     }
     
-    var headers: HTTPHeaders {
+    public var headers: HTTPHeaders {
         switch self {
         case .chkCode:
             return ["Content-Type": "application/x-www-form-urlencoded"]
@@ -46,7 +46,7 @@ public enum AuthRouter: RouterProtocol {
         }
     }
     
-    var parameters: Parameters? {
+    public var parameters: Parameters? {
         switch self {
         case .chkCode:
             return nil
@@ -63,7 +63,7 @@ public enum AuthRouter: RouterProtocol {
         }
     }
     
-    var queryItems: [URLQueryItem]? {
+    public var queryItems: [URLQueryItem]? {
         switch self {
         case .chkCode, .signUp:
             return nil

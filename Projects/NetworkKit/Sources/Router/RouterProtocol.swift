@@ -2,14 +2,14 @@
 //  RouterProtocol.swift
 //  NetworkKit
 //
-//  Created by VP on 12/4/23.
+//  Created by 윤제 on 12/4/23.
 //  Copyright © 2023 com.getc. All rights reserved.
 //
 
 import Foundation
 import Alamofire
 
-protocol RouterProtocol: URLRequestConvertible {
+public protocol RouterProtocol: URLRequestConvertible {
      var endPoint: String { get }
      var method: HTTPMethod { get }
      var headers: HTTPHeaders { get }

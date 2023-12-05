@@ -44,7 +44,7 @@ public struct AppCoordinator: Reducer {
                 state.routes = [
                   .root(
                     .feed(.initialState)
-                  , embedInNavigationView: true)
+                  , embedInNavigationView: false)
                 ]
                 return .none
             default:

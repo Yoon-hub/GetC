@@ -16,40 +16,48 @@ public struct ListParameter {
     let order: String
     let flag: String
     let keyword: String
+    
+    public init(pageNumber: String, pageSize: String, order: String, flag: String, keyword: String) {
+        self.pageNumber = pageNumber
+        self.pageSize = pageSize
+        self.order = order
+        self.flag = flag
+        self.keyword = keyword
+    }
 }
 
 public enum FeedRouter: RouterProtocol {
     case list(listParam: ListParameter)
     
-    var endPoint: String {
+    public var endPoint: String {
         switch self {
         case .list:
             return "post/list"
         }
     }
     
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         switch self {
         case .list:
             return .get
         }
     }
     
-    var headers: HTTPHeaders {
+    public var headers: HTTPHeaders {
         switch self {
         case .list:
             return ["Content-Type": "application/json"]
         }
     }
     
-    var parameters: Parameters? {
+    public var parameters: Parameters? {
         switch self {
         case .list:
             return nil
         }
     }
     
-    var queryItems: [URLQueryItem]? {
+    public var queryItems: [URLQueryItem]? {
         switch self {
         case let .list(listParam):
             return [

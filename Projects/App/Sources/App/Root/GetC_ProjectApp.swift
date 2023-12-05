@@ -11,7 +11,7 @@ import SwiftUI
 import ComposableArchitecture
 
 @main
-struct SwiftUI_VP_ProjectApp: App {
+struct SwiftUI_GetC_ProjectApp: App {
     var body: some Scene {
         WindowGroup {
             AppCoordinatorView(store:

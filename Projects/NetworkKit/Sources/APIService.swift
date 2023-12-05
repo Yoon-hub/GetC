@@ -15,10 +15,11 @@ import GetCKit
 
 public final class APIService {
     
-    public func apiRequset<T: Decodable>(type: T.Type, router: AuthRouter) async -> T {
+    public func apiRequset<T: Decodable, Router: RouterProtocol>(type: T.Type, router: Router) async -> T {
         
         Utility.print("✈️Request: \(router.endPoint)")
         Utility.print("✉️Param: \(router.parameters ?? [:])")
+        Utility.print("✉️QueyItems: \(router.queryItems)")
         
         return await withCheckedContinuation({ continuation in
             AF.request(router)
