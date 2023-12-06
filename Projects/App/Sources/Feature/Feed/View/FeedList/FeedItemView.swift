@@ -29,13 +29,15 @@ struct FeedItemView: View {
                 
                 Spacer()
                 
-                Text("25분전")
+                Text(formatTimeDifference())
                     .font(.system(size: 13))
                 
                 Button {
                     print("...button")
                 } label: {
-                    Image(systemName: "ellipsis")
+                    Image("vertical_ellipsis")
+                        .resizable()
+                        .frame(width: 15, height: 18)
                         .foregroundColor(.black)
                 }
             }
@@ -43,6 +45,9 @@ struct FeedItemView: View {
             Text(feedItem.content)
                 .font(.system(size: 13))
                 .lineLimit(3)
+            
+            Spacer()
+                .frame(height: 2)
             
             HStack {
                 Image(systemName: "heart")
@@ -61,7 +66,6 @@ struct FeedItemView: View {
             
         }
         .background(.white)
-//        .padding(.horizontal, GetCGridRules.globalHorizontalPadding)
     }
 }
 
@@ -69,3 +73,31 @@ struct FeedItemView: View {
     FeedItemView(feedItem: FeedItem(id: 0, title: "감자튀김 가져가", content: "ㅁㄴ이ㅏㄹㅁㄴㅇ;럼나이;니마얼마ㅣ;ㄴㅇ러ㅣㅁ;ㅏㄴ얾;ㅏㅣㄴ얼;미ㅏㄴ얼;미ㅏㄴ얼", authorID: 0, postedAt: Date(), updatedAt: Date(), view: 0))
 }
 
+
+extension FeedItemView {
+    
+    func formatTimeDifference() -> String {
+        guard let postDate = feedItem.postedAt else {return "알 수 없음"}
+        
+        let koreanPostDate = postDate.addingTimeInterval(32400)
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .weekOfMonth, .day, .hour, .minute], from: koreanPostDate, to: Date())
+
+        if let year = components.year, year >= 1 {
+            return "\(year)년 전"
+        } else if let month = components.month, month >= 1 {
+            return "\(month)개월 전"
+        } else if let week = components.weekOfMonth, week >= 1 {
+            return "\(week)주 전"
+        } else if let day = components.day, day >= 1 {
+            return "\(day)일 전"
+        } else if let hour = components.hour, hour >= 1 {
+            return "\(hour)시간 전"
+        } else if let minute = components.minute, minute >= 1 {
+            return "\(minute)분 전"
+        } else {
+            return "방금 전"
+        }
+    }
+}
