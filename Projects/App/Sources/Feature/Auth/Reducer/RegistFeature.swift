@@ -73,7 +73,7 @@ public struct RegistFeature: Reducer {
                 let id = state.emailText
                 let pw = state.passwordText
                 return .run { send in
-                    let response = await apiService.apiRequset(type: SignUpDTO.self, router: AuthRouter.signUp(id: id, pw: pw, nickName: nickName, joinCode: UserDefaultWrapper.pinNumber))
+                    let response = await apiService.apiRequset(type: SignInDTO.self, router: AuthRouter.signUp(id: id, pw: pw, nickName: nickName, joinCode: UserDefaultWrapper.pinNumber))
                     
                     if let data = response.data {
                         // 메인화면 진입

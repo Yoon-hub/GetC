@@ -10,15 +10,19 @@ import SwiftUI
 import GetCKit
 
 import ComposableArchitecture
+import SwiftUIIntrospect
 
 struct FeedListView: View {
     
     public let store: StoreOf<FeedListFeature>
     @ObservedObject var viewStore: ViewStoreOf<FeedListFeature>
+    let feedRefreshHandler: FeedRefreshHandler
     
     init(store: StoreOf<FeedListFeature>) {
         self.store = store
-        self.viewStore = ViewStore(self.store, observe: {$0})
+        let viewStore = ViewStore(self.store, observe: {$0})
+        self.viewStore = viewStore
+        self.feedRefreshHandler = FeedRefreshHandler(viewStore: viewStore)
     }
     
     var body: some View {
@@ -45,6 +49,15 @@ struct FeedListView: View {
                         .listRowInsets(EdgeInsets())
       
                 }
+                .introspect(.scrollView, on: .iOS(.v13, .v14, .v15, .v16, .v17)) { tableView in
+                    
+                    let myRefresh = UIRefreshControl()
+                    feedRefreshHandler.myRefresh = myRefresh
+                    
+                    myRefresh.addTarget(feedRefreshHandler, action: #selector(FeedRefreshHandler.refreshFeed), for: .valueChanged)
+                    tableView.refreshControl = myRefresh
+                    
+                }
                 .listStyle(.plain)
 
             }
@@ -62,6 +75,23 @@ struct FeedListView: View {
         .task {
                 viewStore.send(.viewAppear)
             }
+    }
+}
+
+final class FeedRefreshHandler {
+    let viewStore: ViewStoreOf<FeedListFeature>
+    var myRefresh: UIRefreshControl?
+    
+    init(viewStore: ViewStoreOf<FeedListFeature>) {
+        self.viewStore = viewStore
+    }
+    
+    @objc func refreshFeed() {
+     
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+            self?.viewStore.send(.refresh)
+            self?.myRefresh?.endRefreshing()
+        }
     }
 }
 

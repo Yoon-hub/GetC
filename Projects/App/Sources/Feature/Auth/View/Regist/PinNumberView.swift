@@ -36,7 +36,7 @@ struct PinNumberView: View {
 
             Spacer()
                 .frame(height: 112)
-            Text(viewStore.state.pinNumberState == .first ? "PIN번호를 입력하세요" : "PIN번호를 재입력하세요")
+            Text(viewStore.state.pinNumberState == .first || viewStore.state.pinNumberState == .signIn ? "PIN번호를 입력하세요" : "PIN번호를 재입력하세요")
                 .font(.system(size: 19))
                 .fontWeight(.bold)
                 .foregroundColor(.black)

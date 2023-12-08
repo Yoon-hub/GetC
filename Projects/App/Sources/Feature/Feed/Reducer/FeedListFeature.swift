@@ -15,7 +15,6 @@ import ComposableArchitecture
 public struct FeedListFeature: Reducer {
     
     public struct State: Equatable {
-
         
         var feedList: IdentifiedArrayOf<FeedItem> = []
         
@@ -27,12 +26,16 @@ public struct FeedListFeature: Reducer {
     }
     
     public enum Action {
+        // MARK: - User Interaction
+        case refresh
         
         // MARK: - Inner Action
         case viewAppear
+        case resetFeedList
         
         // MARK: - Inner State Change
         case appendFeedList(feedItem: FeedItem)
+        case requestFeedList
     }
     
     @Dependency(\.apiService) var apiService
@@ -41,6 +44,9 @@ public struct FeedListFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .viewAppear:
+                return .send(.requestFeedList)
+            case .requestFeedList:
+                state.feedList.removeAll()
                 let listParam = ListParameter(pageNumber: "0", pageSize: "10", order: "postId", flag: "", keyword: "")
                 return .run { send in
                     let response = await apiService.apiRequset(type: FeedListDTO.self, router: FeedRouter.list(listParam: listParam))
@@ -57,6 +63,11 @@ public struct FeedListFeature: Reducer {
             case let .appendFeedList(feedItem):
                 state.feedList.append(feedItem)
                 return .none
+            case .resetFeedList:
+                state.feedList.removeAll()
+                return .none
+            case .refresh:
+                return .send(.requestFeedList)
             default:
                 return .none
             }
@@ -79,5 +90,9 @@ public struct FeedListFeature: Reducer {
         
         return calendar.date(from: dateComponents)
     }
+    
+}
+
+extension FeedListFeature {
     
 }

@@ -14,7 +14,7 @@ public protocol RouterProtocol: URLRequestConvertible {
      var method: HTTPMethod { get }
      var headers: HTTPHeaders { get }
      var parameters: Parameters? { get }
-    var queryItems: [URLQueryItem]? {get}
+     var queryItems: [URLQueryItem]? {get}
 }
 
 extension RouterProtocol {
@@ -34,7 +34,7 @@ extension RouterProtocol {
         request.method = method
         request.headers = headers
         
-        request = try JSONEncoding.default.encode(request, with: nil) // 파라미터는 URL 쿼리스트링으로 처리
+        request = try JSONEncoding.default.encode(request, with: parameters) // 파라미터는 URL 쿼리스트링으로 처리
         
         return request
     }
