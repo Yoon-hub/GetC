@@ -33,5 +33,8 @@ public struct UserDefault<T> {
 public struct UserDefaultWrapper {
     @UserDefault(key: "pinNumber", defaultValue: "")
     static public var pinNumber: String
+    
+    @UserDefault(key: "userId", defaultValue: "")
+    static public var userId: String
 }
 

@@ -28,6 +28,7 @@ public struct FeedListFeature: Reducer {
     public enum Action {
         // MARK: - User Interaction
         case refresh
+        case addFeedButtonTap(feedListRefresh: () -> Void)
         
         // MARK: - Inner Action
         case viewAppear
@@ -47,7 +48,7 @@ public struct FeedListFeature: Reducer {
                 return .send(.requestFeedList)
             case .requestFeedList:
                 state.feedList.removeAll()
-                let listParam = ListParameter(pageNumber: "0", pageSize: "10", order: "postId", flag: "", keyword: "")
+                let listParam = ListParameter(pageNumber: "0", pageSize: "20", order: "postId", flag: "", keyword: "")
                 return .run { send in
                     let response = await apiService.apiRequset(type: FeedListDTO.self, router: FeedRouter.list(listParam: listParam))
                     
@@ -74,6 +75,11 @@ public struct FeedListFeature: Reducer {
         }
     }
     
+
+    
+}
+
+extension FeedListFeature {
     public func formateDate(date: [Int]) -> Date? {
         var dateComponents = DateComponents()
         dateComponents.year = date[0]
@@ -90,9 +96,4 @@ public struct FeedListFeature: Reducer {
         
         return calendar.date(from: dateComponents)
     }
-    
-}
-
-extension FeedListFeature {
-    
 }

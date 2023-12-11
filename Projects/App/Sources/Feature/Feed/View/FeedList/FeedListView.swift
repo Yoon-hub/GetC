@@ -61,18 +61,27 @@ struct FeedListView: View {
                 .listStyle(.plain)
 
             }
-            Circle()
-                .frame(width: 50, height: 50)
-                .foregroundColor(GetCKitAsset.color1.swiftUIColor)
-                .overlay {
-                    Image(systemName: "plus")
-                        .font(.system(size: 26))
-                        .foregroundColor(.black)
-                }
-                .padding(.trailing, 16)
-                .padding(.bottom, 16)
+
+            Button {
+                viewStore.send(.addFeedButtonTap(feedListRefresh: {
+                    viewStore.send(.refresh)
+                }))
+            } label: {
+                Circle()
+                    .frame(width: 60, height: 60)
+                    .foregroundColor(GetCKitAsset.color1.swiftUIColor)
+                    .overlay {
+                        Image(systemName: "plus")
+                            .font(.system(size: 26))
+                            .foregroundColor(.black)
+                    }
+                    .padding(.trailing, 16)
+                    .padding(.bottom, 16)
+            }
+
         }
         .task {
+                Utility.print("task")
                 viewStore.send(.viewAppear)
             }
     }

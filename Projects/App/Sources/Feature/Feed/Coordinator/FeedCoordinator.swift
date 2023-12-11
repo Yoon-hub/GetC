@@ -30,6 +30,12 @@ public struct FeedCoordinator: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
             switch action {
+            case .routeAction(_, action: .setFeedList(.addFeedButtonTap(let refresh))):
+                state.routes.append(.cover(.setFeedAdd(.init(feedListRefresh: refresh)), embedInNavigationView: false, onDismiss: nil))
+                return .none
+            case .routeAction(_, action: .setFeedAdd(.xButtonTap)):
+                state.routes.dismiss()
+                return .none
             default:
                 return .none
             }

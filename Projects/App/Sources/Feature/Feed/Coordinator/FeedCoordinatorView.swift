@@ -24,6 +24,8 @@ public struct FeedCoordinatorView: View {
                 switch screen {
                 case .setFeedList:
                     CaseLet(/FeedScreen.State.setFeedList, action: FeedScreen.Action.setFeedList, then: FeedListView.init)
+                case .setFeedAdd(_):
+                    CaseLet(/FeedScreen.State.setFeedAdd, action: FeedScreen.Action.setFeedAdd, then: FeedAddView.init)
                 }
             }
         }

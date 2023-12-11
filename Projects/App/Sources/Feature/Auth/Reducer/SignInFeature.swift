@@ -55,6 +55,7 @@ public struct SignInFeature: Reducer {
                     
                     if let data = response.data {
                         // 메인화면 진입
+                        UserDefaultWrapper.userId = "\(data.userID)"
                         await send(.routeToFeed)
                     } else {
                         await send(.errorMessage(message: response.message))
