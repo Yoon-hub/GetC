@@ -10,17 +10,20 @@ import SwiftUI
 
 struct MultiStyleTextView: UIViewRepresentable {
     @Binding var text: String
+    let placerHolder = "글제목       "
 
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.isEditable = true
         textView.delegate = context.coordinator
-        textView.font = UIFont.systemFont(ofSize: 26)
+        textView.font = UIFont.boldSystemFont(ofSize: 26)
+        textView.text = placerHolder
+        textView.textColor = UIColor.systemGray5
         return textView
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
-        uiView.attributedText = attributedText()
+       // uiView.attributedText = attributedText()
     }
 
     func makeCoordinator() -> Coordinator {
@@ -56,10 +59,25 @@ struct MultiStyleTextView: UIViewRepresentable {
         init(_ parent: MultiStyleTextView) {
             self.parent = parent
         }
-
+        
+        func textViewDidBeginEditing(_ textView: UITextView) {
+            if textView.text == parent.placerHolder {
+                textView.text = ""
+                textView.textColor = UIColor.black
+            }
+        }
+        
+        func textViewDidEndEditing(_ textView: UITextView) {
+            if textView.text == "" {
+                textView.text = parent.placerHolder
+                textView.textColor = UIColor.lightGray
+            }
+        }
+        
         func textViewDidChange(_ textView: UITextView) {
             // Update the binding when the text changes
             parent.text = textView.text
+            textView.attributedText = parent.attributedText()
         }
     }
 }
