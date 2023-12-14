@@ -29,6 +29,8 @@ public struct AppCoordinatorView: View {
                     CaseLet(/AppScreen.State.auth, action: AppScreen.Action.auth, then: AuthCoordinatorView.init)
                 case .feed:
                     CaseLet(/AppScreen.State.feed, action: AppScreen.Action.feed, then: FeedCoordinatorView.init)
+                case .setting:
+                    CaseLet(/AppScreen.State.setting, action: AppScreen.Action.setting, then: SettingCoordinatorView.init)
                 }
             }
         }

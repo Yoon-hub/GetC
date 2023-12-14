@@ -29,6 +29,7 @@ public struct FeedListFeature: Reducer {
         // MARK: - User Interaction
         case refresh
         case addFeedButtonTap(feedListRefresh: () -> Void)
+        case settingButtonTap
         
         // MARK: - Inner Action
         case viewAppear

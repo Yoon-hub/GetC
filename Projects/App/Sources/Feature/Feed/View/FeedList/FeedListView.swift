@@ -30,13 +30,24 @@ struct FeedListView: View {
             VStack {
                 //MARK: Header
                 HStack {
-                    Image(systemName: "ellipsis")
-                        .font(.system(size: 26))
-                        .foregroundColor(.black)
+                    
+                    Button(action: {
+                        viewStore.send(.settingButtonTap)
+                    }, label: {
+                        Image(systemName: "ellipsis")
+                            .font(.system(size: 26))
+                            .foregroundColor(.black)
+                    })
+                    
                     Spacer()
-                    Image(systemName: "magnifyingglass")
-                        .font(.system(size: 26))
-                        .foregroundColor(.black)
+                    
+                    Button(action: {
+                        
+                    }, label: {
+                        Image(systemName: "magnifyingglass")
+                            .font(.system(size: 26))
+                            .foregroundColor(.black)
+                    })
                 }
                 .padding(.horizontal, 16)
                 

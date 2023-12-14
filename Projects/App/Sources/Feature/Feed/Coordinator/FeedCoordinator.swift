@@ -25,6 +25,9 @@ public struct FeedCoordinator: Reducer {
     public enum Action: IndexedRouterAction {
         case routeAction(Int, action:FeedScreen.Action)
         case updateRoutes([Route<FeedScreen.State>])
+        
+        case moveToAuth
+        case moveToSetting
     }
     
     public var body: some ReducerOf<Self> {
@@ -36,6 +39,8 @@ public struct FeedCoordinator: Reducer {
             case .routeAction(_, action: .setFeedAdd(.xButtonTap)):
                 state.routes.dismiss()
                 return .none
+            case .routeAction(_, action: .setFeedList(.settingButtonTap)):
+                return .send(.moveToSetting)
             default:
                 return .none
             }

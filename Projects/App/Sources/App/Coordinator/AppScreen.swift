@@ -15,12 +15,14 @@ public struct AppScreen: Reducer {
         case splash(SplashFeature.State)
         case auth(AuthCoordinator.State)
         case feed(FeedCoordinator.State)
+        case setting(SettingCoordinator.State)
     }
     
     public enum Action {
         case splash(SplashFeature.Action)
         case auth(AuthCoordinator.Action)
         case feed(FeedCoordinator.Action)
+        case setting(SettingCoordinator.Action)
     }
     
     public var body: some ReducerOf<Self> {
@@ -34,6 +36,10 @@ public struct AppScreen: Reducer {
         
         Scope(state: /State.feed, action: /Action.feed) {
             FeedCoordinator()
+        }
+        
+        Scope(state: /State.setting, action: /Action.setting) {
+            SettingCoordinator()
         }
     }
 

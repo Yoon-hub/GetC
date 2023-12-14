@@ -33,7 +33,7 @@ struct FeedItemView: View {
                     .font(.system(size: 13))
                 
                 Button {
-                    print("...button")
+                    
                 } label: {
                     Image("vertical_ellipsis")
                         .resizable()

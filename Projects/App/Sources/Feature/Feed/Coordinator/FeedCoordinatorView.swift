@@ -26,6 +26,8 @@ public struct FeedCoordinatorView: View {
                     CaseLet(/FeedScreen.State.setFeedList, action: FeedScreen.Action.setFeedList, then: FeedListView.init)
                 case .setFeedAdd(_):
                     CaseLet(/FeedScreen.State.setFeedAdd, action: FeedScreen.Action.setFeedAdd, then: FeedAddView.init)
+//                case .setSetting(_):
+//                    CaseLet(/FeedScreen.State.setSetting, action: FeedScreen.Action.setSetting, then: SettingListView.init)
                 }
             }
         }

@@ -16,11 +16,13 @@ public struct FeedScreen: Reducer {
     public enum State: Equatable {
         case setFeedList(FeedListFeature.State)
         case setFeedAdd(FeedAddFeature.State)
+      //  case setSetting(SettingListFeature.State)
     }
     
     public enum Action {
         case setFeedList(FeedListFeature.Action)
         case setFeedAdd(FeedAddFeature.Action)
+        //case setSetting(SettingListFeature.Action)
     }
     
     public var body: some ReducerOf<Self> {
@@ -31,6 +33,11 @@ public struct FeedScreen: Reducer {
         Scope(state: /State.setFeedAdd, action: /Action.setFeedAdd) {
             FeedAddFeature()
         }
+        
+//        Scope(state: /State.setSetting, action: /Action.setSetting) {
+//            SettingListFeature()
+//        }
+    
     }
     
 }
