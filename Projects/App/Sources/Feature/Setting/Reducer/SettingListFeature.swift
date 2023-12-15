@@ -20,6 +20,7 @@ public struct SettingListFeature: Reducer {
         // MARK: - User Interaction
         case navigationBarBackButtonTap
         case logoutButtonTap
+        case invitedFriendButtonTap
     }
     
     public var body: some ReducerOf<Self> {

@@ -14,10 +14,13 @@ import TCACoordinators
 public struct SettingScreen: Reducer {
     public enum State: Equatable {
         case setSettingList(SettingListFeature.State)
+        case setInviteCode(InvitedCodeFeature.State)
     }
     
     public enum Action {
         case setSettingList(SettingListFeature.Action)
+        case setInviteCode(InvitedCodeFeature.Action)
+    
     }
     
     public var body: some ReducerOf<Self> {
@@ -25,6 +28,11 @@ public struct SettingScreen: Reducer {
             SettingListFeature()
         
         }
+        Scope(state: /State.setInviteCode, action: /Action.setInviteCode) {
+            InvitedCodeFeature()
+        
+        }
+    
     }
     
 }

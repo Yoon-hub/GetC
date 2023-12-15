@@ -22,8 +22,10 @@ public struct SettingCoordinatorView: View {
         TCARouter(store) { screen in
             SwitchStore(screen) { screen in
                 switch screen {
-                case .setSettingList(let store):
+                case .setSettingList(_):
                     CaseLet(/SettingScreen.State.setSettingList, action: SettingScreen.Action.setSettingList, then: SettingListView.init)
+                case .setInviteCode(_):
+                    CaseLet(/SettingScreen.State.setInviteCode, action: SettingScreen.Action.setInviteCode, then: InviteCodeView.init)
                 }
                 
             }

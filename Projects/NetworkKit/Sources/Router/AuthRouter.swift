@@ -16,6 +16,8 @@ public enum AuthRouter: RouterProtocol {
     case chkCode(code: String)
     case signUp(id: String, pw: String, nickName: String, joinCode: String)
     case signIn(id: String, pw: String)
+    case codeList(userId: String)
+    case codeMake(userId: String)
     
     public var endPoint: String {
         switch self {
@@ -25,30 +27,34 @@ public enum AuthRouter: RouterProtocol {
             return "member/join"
         case .signIn:
             return "member/login"
+        case .codeList(let userId):
+            return "invite/code-list/\(userId)"
+        case .codeMake:
+            return "invite/create-code"
         }
     }
     
     public var method: HTTPMethod {
         switch self {
-        case .chkCode:
+        case .chkCode, .codeList:
             return .get
-        case .signUp, .signIn:
+        case .signUp, .signIn, .codeMake:
             return .post
         }
     }
     
     public var headers: HTTPHeaders {
         switch self {
-        case .chkCode:
+        case .chkCode, .codeList:
             return ["Content-Type": "application/x-www-form-urlencoded"]
-        case .signUp, .signIn:
+        case .signUp, .signIn, .codeMake:
             return ["Content-Type": "application/json"]
         }
     }
     
     public var parameters: Parameters? {
         switch self {
-        case .chkCode:
+        case .chkCode, .codeList:
             return nil
         case let .signUp(id, pw, nickName, joinCode):
             return [
@@ -60,12 +66,14 @@ public enum AuthRouter: RouterProtocol {
             ]
         case .signIn:
             return nil
+        case .codeMake(let userId):
+            return ["userId" : userId]
         }
     }
     
     public var queryItems: [URLQueryItem]? {
         switch self {
-        case .chkCode, .signUp:
+        case .chkCode, .signUp, .codeList, .codeMake:
             return nil
         case let .signIn(id, pw):
             return [

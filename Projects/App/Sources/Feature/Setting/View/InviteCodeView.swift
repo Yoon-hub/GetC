@@ -13,6 +13,15 @@ import ComposableArchitecture
 import TCACoordinators
 
 struct InviteCodeView: View {
+    
+    let store: StoreOf<InvitedCodeFeature>
+    @ObservedObject var viewStore: ViewStoreOf<InvitedCodeFeature>
+    
+    init(store: StoreOf<InvitedCodeFeature>) {
+        self.store = store
+        viewStore = ViewStore(self.store, observe: {$0})
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             Spacer()
@@ -21,7 +30,7 @@ struct InviteCodeView: View {
                 .fontWeight(.bold)
             Text("총 3명의 친구를 초대할 수 있어요")
             
-        Spacer()
+            Spacer()
                 .frame(height: 26)
             
             Button {
@@ -32,11 +41,33 @@ struct InviteCodeView: View {
             .buttonStyle(CommonButtonStyle())
             Spacer()
             
+            List(viewStore.codeList, id:\.self) { code in
+                
+                HStack {
+                    Spacer()
+                    CodeItemView(code: code)
+                    Spacer()
+                }
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color.clear)
+            }
+            .listStyle(.plain)
+            
+            
+            
+        }
+        .onAppear() {
+            viewStore.send(.viewAppear)
         }
         .padding(.horizontal, GetCGridRules.globalHorizontalPadding)
+        .navigationBackButtonSet {
+            
+        }
     }
 }
 
 #Preview {
-    InviteCodeView()
+    InviteCodeView(store: .init(initialState: .init(), reducer: {
+        InvitedCodeFeature()
+    }))
 }

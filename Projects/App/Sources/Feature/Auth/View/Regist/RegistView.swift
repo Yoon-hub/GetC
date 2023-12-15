@@ -79,9 +79,6 @@ public struct RegistView: View {
             }
         } message: {
         }
-//        .alert("회원가입 오류", isPresented: viewStore.binding(get: \.shouldShowErrorAlert, send: RegistFeature.Action.errorMessageAction)) {
-//            Text(viewStore.state.errorText)
-//        }
         .alert("회원가입 오류", isPresented: viewStore.binding(get: \.shouldShowErrorAlert, send: RegistFeature.Action.errorMessageAction)) {
             
         } message: {
@@ -101,4 +98,3 @@ struct RegistView_Previews: PreviewProvider {
 }
 
 
-//viewStore.binding(get: \.shouldShowAlert, send: RegistFeature.Action.alertAction)

@@ -37,6 +37,9 @@ public struct SettingCoordinator: Reducer {
                 return .send(.moveToFeed)
             case .routeAction(_, action: .setSettingList(.logoutButtonTap)):
                 return .send(.moveToAuth)
+            case .routeAction(_, action: .setSettingList(.invitedFriendButtonTap)):
+                state.routes.append(.push(.setInviteCode(.init())))
+                return .none
             default:
                 return .none
             }

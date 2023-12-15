@@ -98,6 +98,7 @@ struct FeedListView: View {
     }
 }
 
+// MARK: - Handler
 final class FeedRefreshHandler {
     let viewStore: ViewStoreOf<FeedListFeature>
     var myRefresh: UIRefreshControl?

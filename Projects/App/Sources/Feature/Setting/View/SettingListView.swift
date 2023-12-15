@@ -43,7 +43,7 @@ struct SettingListView: View {
                 .frame(height: 30)
             
             Button {
-                
+                viewStore.send(.invitedFriendButtonTap)
             } label: {
                 HStack {
                     Image(systemName: "balloon")

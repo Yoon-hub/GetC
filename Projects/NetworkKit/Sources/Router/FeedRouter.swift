@@ -10,22 +10,6 @@ import Foundation
 
 import Alamofire
 
-public struct ListParameter {
-    let pageNumber: String
-    let pageSize: String
-    let order: String
-    let flag: String
-    let keyword: String
-    
-    public init(pageNumber: String, pageSize: String, order: String, flag: String, keyword: String) {
-        self.pageNumber = pageNumber
-        self.pageSize = pageSize
-        self.order = order
-        self.flag = flag
-        self.keyword = keyword
-    }
-}
-
 public enum FeedRouter: RouterProtocol {
     case list(listParam: ListParameter)
     case create(authorId: String, title: String, Content: String, flag: String)
