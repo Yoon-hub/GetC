@@ -12,7 +12,8 @@ let infoPlist: [String: Plist.Value] = [
     "UILaunchStoryboardName":"LaunchScreen",
     "NSAppTransportSecurity": [
         "NSAllowsArbitraryLoads": true
-    ]
+    ],
+    "UIUserInterfaceStyle": "Light"
 ]
 
 let appTargets: [Target] = [
