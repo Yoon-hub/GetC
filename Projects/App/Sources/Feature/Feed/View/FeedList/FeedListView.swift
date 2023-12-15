@@ -55,9 +55,11 @@ struct FeedListView: View {
                     FeedItemView(feedItem: feedItem)
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
                     Color.init(uiColor: UIColor.systemGray6)
-                        .frame(height: 12)
+                        .frame(height: 6)
                         .listRowInsets(EdgeInsets())
+                        .listRowInsets(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
       
                 }
                 .introspect(.scrollView, on: .iOS(.v13, .v14, .v15, .v16, .v17)) { tableView in

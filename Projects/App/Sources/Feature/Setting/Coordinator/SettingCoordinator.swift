@@ -40,6 +40,9 @@ public struct SettingCoordinator: Reducer {
             case .routeAction(_, action: .setSettingList(.invitedFriendButtonTap)):
                 state.routes.append(.push(.setInviteCode(.init())))
                 return .none
+            case .routeAction(_, action: .setInviteCode(.navigationBackButtonTap)):
+                state.routes.pop()
+                return .none
             default:
                 return .none
             }

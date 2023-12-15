@@ -15,11 +15,11 @@ public struct CodeListDTO: Codable {
 }
 
 // MARK: - Datum
-public struct Datum: Codable {
+public struct Datum: Codable, Hashable {
     let inviteID, userID: Int
     public let inviteCode, isUsed: String
     let createdAt: [Int]
-    let updatedAt: JSONNull?
+    let updatedAt: [Int]?
 
     enum CodingKeys: String, CodingKey {
         case inviteID = "inviteId"

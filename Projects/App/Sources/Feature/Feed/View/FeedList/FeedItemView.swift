@@ -52,18 +52,17 @@ struct FeedItemView: View {
             HStack {
                 Image(systemName: "heart")
                     .font(.system(size: 13))
-                Text("3")
+                Text("0")
                     .font(.system(size: 13))
                 Image(systemName: "bubble.left")
                     .font(.system(size: 13))
-                Text("3")
+                Text("0")
                     .font(.system(size: 13))
                 Image(systemName: "eye")
                     .font(.system(size: 13))
                 Text("\(feedItem.view)")
                     .font(.system(size: 13))
             }
-            
         }
         .background(.white)
     }

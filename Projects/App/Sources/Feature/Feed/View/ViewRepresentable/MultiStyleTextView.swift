@@ -75,9 +75,15 @@ struct MultiStyleTextView: UIViewRepresentable {
         }
         
         func textViewDidChange(_ textView: UITextView) {
+            // Save the current cursor position
+            let cursorPosition = textView.selectedRange.location
+
             // Update the binding when the text changes
             parent.text = textView.text
+
+            // Apply attributed text and reset cursor position
             textView.attributedText = parent.attributedText()
+            textView.selectedRange = NSRange(location: cursorPosition, length: 0)
         }
     }
 }

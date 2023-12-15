@@ -34,18 +34,20 @@ struct InviteCodeView: View {
                 .frame(height: 26)
             
             Button {
-                
+                viewStore.send(.codeMakeButtonTap)
             } label: {
                 Text("초대코드 생성")
             }
             .buttonStyle(CommonButtonStyle())
+            
+            
             Spacer()
             
             List(viewStore.codeList, id:\.self) { code in
                 
                 HStack {
                     Spacer()
-                    CodeItemView(code: code)
+                    CodeItemView(code: code.inviteCode, expire: code.isUsed == "0" ? false : true)
                     Spacer()
                 }
                 .listRowSeparator(.hidden)
@@ -53,16 +55,20 @@ struct InviteCodeView: View {
             }
             .listStyle(.plain)
             
-            
-            
         }
         .onAppear() {
             viewStore.send(.viewAppear)
         }
         .padding(.horizontal, GetCGridRules.globalHorizontalPadding)
         .navigationBackButtonSet {
-            
+            viewStore.send(.navigationBackButtonTap)
         }
+        .alert("초대코드 생성 불가", isPresented: viewStore.binding(get: \.isShowAlert, send: InvitedCodeFeature.Action.hiddeAlert)) {
+
+        } message: {
+            Text("초대 코드는 3개만 발급이 가능해요.")
+        }
+        
     }
 }
 

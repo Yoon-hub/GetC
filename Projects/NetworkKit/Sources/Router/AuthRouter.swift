@@ -66,19 +66,23 @@ public enum AuthRouter: RouterProtocol {
             ]
         case .signIn:
             return nil
-        case .codeMake(let userId):
-            return ["userId" : userId]
+        case .codeMake:
+            return nil
         }
     }
     
     public var queryItems: [URLQueryItem]? {
         switch self {
-        case .chkCode, .signUp, .codeList, .codeMake:
+        case .chkCode, .signUp, .codeList:
             return nil
         case let .signIn(id, pw):
             return [
                 URLQueryItem(name: "memberId", value: id),
                 URLQueryItem(name: "password", value: pw)
+            ]
+        case .codeMake(let userId):
+            return [
+                URLQueryItem(name: "userId", value: userId)
             ]
         }
     }
