@@ -40,8 +40,11 @@ public struct SettingCoordinator: Reducer {
             case .routeAction(_, action: .setSettingList(.invitedFriendButtonTap)):
                 state.routes.append(.push(.setInviteCode(.init())))
                 return .none
-            case .routeAction(_, action: .setInviteCode(.navigationBackButtonTap)):
+            case .routeAction(_, action: .setInviteCode(.navigationBackButtonTap)), .routeAction(_, action: .setMyFeedList(.naivgationBackButtonTap)):
                 state.routes.pop()
+                return .none
+            case .routeAction(_, action: .setSettingList(.myFeedButtonTap)):
+                state.routes.append(.push(.setMyFeedList(.init())))
                 return .none
             default:
                 return .none

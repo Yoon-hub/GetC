@@ -30,7 +30,8 @@ let appTargets: [Target] = [
           .project(target: "NetworkKit", path: "../NetworkKit"),
           .external(name: "TCACoordinators"),
           .external(name: "ComposableArchitecture"),
-          .external(name: "SwiftUIIntrospect")
+          .external(name: "SwiftUIIntrospect"),
+          .external(name: "PopupView")
         ])
 ]
 

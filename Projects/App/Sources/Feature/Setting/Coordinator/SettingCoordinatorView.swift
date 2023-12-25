@@ -26,6 +26,8 @@ public struct SettingCoordinatorView: View {
                     CaseLet(/SettingScreen.State.setSettingList, action: SettingScreen.Action.setSettingList, then: SettingListView.init)
                 case .setInviteCode(_):
                     CaseLet(/SettingScreen.State.setInviteCode, action: SettingScreen.Action.setInviteCode, then: InviteCodeView.init)
+                case .setMyFeedList(_):
+                    CaseLet(/SettingScreen.State.setMyFeedList, action: SettingScreen.Action.setMyFeedList, then: MyFeedListView.init)
                 }
                 
             }

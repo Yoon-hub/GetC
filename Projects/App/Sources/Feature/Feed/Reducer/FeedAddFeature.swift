@@ -9,6 +9,7 @@
 import Foundation
 import GetCKit
 import NetworkKit
+import SwiftUI
 
 import ComposableArchitecture
 
@@ -21,7 +22,7 @@ public struct FeedAddFeature: Reducer {
     
     public struct State: Equatable {
         
-        var feedText: String = ""
+        @BindingState var feedText: String = ""
         var titleText: String = ""
         var contentText: String = ""
         var completeButtonState: CompleteButton = .disable
@@ -36,7 +37,7 @@ public struct FeedAddFeature: Reducer {
         }
     }
     
-    public enum Action {
+    public enum Action: BindableAction {
         // MARK: - User Define
         case xButtonTap
         case feedTextFieldEdit(text: String)
@@ -50,11 +51,14 @@ public struct FeedAddFeature: Reducer {
         case checkEnableUpload
         case showAlert
         case hideAlert
+        case binding(BindingAction<State>)
     }
     
     @Dependency(\.apiService) var apiService
     
-    public var body: some ReducerOf<Self> {
+    public var body: some Reducer<State, Action> {
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case .feedTextFieldEdit(let text):

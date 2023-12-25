@@ -21,6 +21,7 @@ public struct SettingListFeature: Reducer {
         case navigationBarBackButtonTap
         case logoutButtonTap
         case invitedFriendButtonTap
+        case myFeedButtonTap
     }
     
     public var body: some ReducerOf<Self> {

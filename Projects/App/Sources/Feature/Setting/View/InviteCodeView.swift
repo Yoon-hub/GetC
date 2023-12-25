@@ -63,6 +63,7 @@ struct InviteCodeView: View {
         .navigationBackButtonSet {
             viewStore.send(.navigationBackButtonTap)
         }
+        .navigationTitle("초대코드")
         .alert("초대코드 생성 불가", isPresented: viewStore.binding(get: \.isShowAlert, send: InvitedCodeFeature.Action.hiddeAlert)) {
 
         } message: {

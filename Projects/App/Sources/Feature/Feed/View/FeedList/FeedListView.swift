@@ -56,6 +56,9 @@ struct FeedListView: View {
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
+                        .onTapGesture {
+                            viewStore.send(.feedItemTap(feedItem: feedItem))
+                        }
                     Color.init(uiColor: UIColor.systemGray6)
                         .frame(height: 6)
                         .listRowInsets(EdgeInsets())

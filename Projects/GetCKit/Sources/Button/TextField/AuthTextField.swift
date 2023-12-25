@@ -13,17 +13,21 @@ public struct AuthTextField: View {
     @Binding public var text: String
     public var placeholder: String
     public var error: Bool
+    public var height: CGFloat
+    public var fontSize: CGFloat
     
-    public init(text: Binding<String>, placeholder: String = "", error: Bool = true) {
+    public init(text: Binding<String>, placeholder: String = "", error: Bool = true, height: CGFloat = 66, fontSize: CGFloat = 22) {
         self._text = text
         self.placeholder = placeholder
         self.error = error
+        self.height = height
+        self.fontSize = fontSize
     }
     
     public var body: some View {
         TextField(placeholder, text: $text)
-            .font(.system(size: 22))
-            .frame(height: 62)
+            .font(.system(size: fontSize))
+            .frame(height: height)
             .padding(.horizontal, 12)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)

@@ -29,7 +29,7 @@ struct FeedItemView: View {
                 
                 Spacer()
                 
-                Text(formatTimeDifference())
+                Text(formatTimeDifference(postedAt: feedItem.postedAt))
                     .font(.system(size: 13))
                 
                 Button {
@@ -69,14 +69,14 @@ struct FeedItemView: View {
 }
 
 #Preview {
-    FeedItemView(feedItem: FeedItem(id: 0, title: "감자튀김 가져가", content: "ㅁㄴ이ㅏㄹㅁㄴㅇ;럼나이;니마얼마ㅣ;ㄴㅇ러ㅣㅁ;ㅏㄴ얾;ㅏㅣㄴ얼;미ㅏㄴ얼;미ㅏㄴ얼", authorID: 0, postedAt: Date(), updatedAt: Date(), view: 0))
+    FeedItemView(feedItem: FeedItem(id: 0, title: "감자튀김 가져가", content: "ㅁㄴ이ㅏㄹㅁㄴㅇ;럼나이;니마얼마ㅣ;ㄴㅇ러ㅣㅁ;ㅏㄴ얾;ㅏㅣㄴ얼;미ㅏㄴ얼;미ㅏㄴ얼", authorID: 0, postedAt: Date(), updatedAt: Date(), view: 0, postID: "5"))
 }
 
 
-extension FeedItemView {
+extension View {
     
-    func formatTimeDifference() -> String {
-        guard let postDate = feedItem.postedAt else {return "알 수 없음"}
+    func formatTimeDifference(postedAt: Date?) -> String {
+        guard let postDate = postedAt else {return "알 수 없음"}
         
         let koreanPostDate = postDate.addingTimeInterval(32400)
         

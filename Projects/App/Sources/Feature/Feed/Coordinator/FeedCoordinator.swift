@@ -41,6 +41,12 @@ public struct FeedCoordinator: Reducer {
                 return .none
             case .routeAction(_, action: .setFeedList(.settingButtonTap)):
                 return .send(.moveToSetting)
+            case .routeAction(_, action: .setFeedList(.feedItemTap(let feedItem))):
+                state.routes.append(.push(.setFeedDetail(.init(feedItem: feedItem))))
+                return .none
+            case .routeAction(_, action: .setFeedDetail(.navigationBackButtonTapped)):
+                state.routes.pop()
+                return .none
             default:
                 return .none
             }

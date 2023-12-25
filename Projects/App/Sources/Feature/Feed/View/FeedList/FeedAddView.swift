@@ -43,7 +43,11 @@ struct FeedAddView: View {
                 }
             }
             Spacer()
-            MultiStyleTextView(text: viewStore.binding(get: \.feedText, send: FeedAddFeature.Action.feedTextFieldEdit))
+//            MultiStyleTextView(text: viewStore.binding(get: \.feedText, send: FeedAddFeature.Action.feedTextFieldEdit))
+            
+            MultiStyleTextView(text: viewStore.$feedText)
+            
+
             
         }
         .padding(.horizontal, GetCGridRules.globalHorizontalPadding)

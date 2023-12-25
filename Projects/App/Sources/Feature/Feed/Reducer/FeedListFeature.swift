@@ -30,7 +30,8 @@ public struct FeedListFeature: Reducer {
         case refresh
         case addFeedButtonTap(feedListRefresh: () -> Void)
         case settingButtonTap
-        
+        case feedItemTap(feedItem: FeedItem)
+
         // MARK: - Inner Action
         case viewAppear
         case resetFeedList
@@ -55,7 +56,7 @@ public struct FeedListFeature: Reducer {
                     
                     if let data = response.data {
                         for i in data.content {
-                            let feedItem = FeedItem(id: i.postID, title: i.title, content: i.content, authorID: i.authorID, postedAt: formateDate(date: i.postedAt) , updatedAt: nil, view: i.view)
+                            let feedItem = FeedItem(id: i.postID, title: i.title, content: i.content, authorID: i.authorID, postedAt: formateDate(date: i.postedAt) , updatedAt: nil, view: i.view, postID: "5")
                             await send(.appendFeedList(feedItem: feedItem))
                         }
                     } else {
@@ -80,7 +81,7 @@ public struct FeedListFeature: Reducer {
     
 }
 
-extension FeedListFeature {
+extension Reducer {
     public func formateDate(date: [Int]) -> Date? {
         var dateComponents = DateComponents()
         dateComponents.year = date[0]

@@ -19,4 +19,5 @@ public struct FeedItem: Identifiable, Equatable {
     public let postedAt: Date?
     public let updatedAt: Date?
     public let view: Int
+    public let postID: String
 }

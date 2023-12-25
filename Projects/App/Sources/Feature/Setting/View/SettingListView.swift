@@ -27,7 +27,7 @@ struct SettingListView: View {
                 .frame(height: 16)
             
             Button {
-                
+                viewStore.send(.myFeedButtonTap)
             } label: {
                 HStack {
                     Image(systemName: "book.closed")
@@ -70,6 +70,7 @@ struct SettingListView: View {
         .navigationBackButtonSet {
             viewStore.send(.navigationBarBackButtonTap)
         }
+        .navigationTitle("설정")
     }
 }
 
